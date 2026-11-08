@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS cost &amp; waste audit - {{ r.account_label or r.account_id }}</title>
+<style>
+:root{--bg:#f5f6f8;--fg:#18202e;--card:#fff;--line:#dfe3e8;--muted:#5b6475;--accent:#0b6bcb;--high:#c62828;--medium:#b26a00;--low:#2e7d32;--info:#607080}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1116;--fg:#e8edf3;--card:#161b22;--line:#2d333b;--muted:#94a0b0;--accent:#58a6ff;--high:#f47067;--medium:#d29922;--low:#57ab5a;--info:#8b949e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1060px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:26px;margin:0}h2{font-size:19px;margin:32px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}h3{font-size:16px;margin:20px 0 4px}
+.muted{color:var(--muted)}
+.banner{background:#fff4ce;color:#5c4400;border:1px solid #e3c35a;border-radius:8px;padding:10px 14px;margin:14px 0;font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card .v{font-size:28px;font-weight:700}.card .l{color:var(--muted);font-size:13px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);background:transparent}
+td.num,th.num{text-align:right;white-space:nowrap}
+code{font-size:12.5px;word-break:break-all}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid currentColor}
+.high{color:var(--high)}.medium{color:var(--medium)}.low{color:var(--low)}.info{color:var(--info)}
+details{margin-top:4px}summary{cursor:pointer;color:var(--accent);font-size:13px}
+pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;font-size:12px}
+.why{color:var(--muted);margin:0 0 8px}
+footer{margin-top:40px;color:var(--muted);font-size:13px}
+@media print{body{background:#fff;color:#000}.card,table{border-color:#bbb}details>summary{list-style:none;color:#000;font-weight:600}details::details-content{content-visibility:visible;display:block}a{color:#000}}
+@media (max-width:640px){td:nth-child(4),th:nth-child(4){display:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1>AWS cost &amp; waste audit</h1>
+  <div class="muted">Account {{ r.account_label or r.account_id }} &middot; regions {{ r.regions|join(", ") }} &middot; {{ r.started_at.strftime("%d %b %Y, %H:%M UTC") }}</div>
+  {% if r.synthetic %}
+  <div class="banner">SYNTHETIC DEMO DATA &mdash; generated against a simulated AWS account (moto). It shows what a real report looks like; no customer data.</div>
+  {% endif %}
+
+  <div class="cards">
+    <div class="card"><div class="l">Estimated savings / month</div><div class="v">{{ r.monthly_savings|usd }}</div></div>
+    <div class="card"><div class="l">Estimated savings / year</div><div class="v">{{ (r.monthly_savings * 12)|usd }}</div></div>
+    <div class="card"><div class="l">Findings</div><div class="v">{{ r.findings|length }}</div>
+      <div class="l">{% for k, v in r.priority_counts().items() if v %}<span class="{{ k }}">{{ v }} {{ k }}</span>{% if not loop.last %} &middot; {% endif %}{% endfor %}</div></div>
+    <div class="card"><div class="l">Low-risk quick wins</div><div class="v">{{ r.quick_wins|length }}</div><div class="l">{{ r.quick_wins|sum(attribute="est_monthly_savings")|usd }} / month</div></div>
+  </div>
+
+  <h2>Summary</h2>
+  {% set top = r.findings|selectattr("est_monthly_savings")|sort(attribute="est_monthly_savings", reverse=true)|list %}
+  <p>
+    The scan ran {{ r.checks_run|length }} read-only {{ "check" if r.checks_run|length == 1 else "checks" }} and found {{ r.findings|length }} {{ "item" if r.findings|length == 1 else "items" }} worth reviewing.
+    {% if top %}The largest single opportunity is <strong>{{ top[0].title }}</strong> (<code>{{ top[0].resource_id }}</code>,
+    about {{ top[0].est_monthly_savings|usd }}/month).{% endif %}
+    {% set qn = r.quick_wins|length %}{% if qn %} {{ qn }} {{ "fix is" if qn == 1 else "fixes are" }} low-risk and can be done this week.{% endif %}
+    Nothing was changed in the account: every fix below is a command for you to review and run.
+  </p>
+
+  {% if r.cost_by_service %}
+  <h2>Spend by service</h2>
+  {% set periods = r.cost_by_service[0].keys()|reject("equalto", "service")|list %}
+  <table><thead><tr><th>Service</th>{% for p in periods %}<th class="num">{{ p }}</th>{% endfor %}</tr></thead><tbody>
+  {% for row in r.cost_by_service %}<tr><td>{{ row.service }}</td>{% for p in periods %}<td class="num">{{ row[p]|usd }}</td>{% endfor %}</tr>{% endfor %}
+  </tbody></table>
+  {% endif %}
+
+  <h2>Top opportunities</h2>
+  <table><thead><tr><th>Priority</th><th>What</th><th>Resource</th><th>Region</th><th class="num">Saving / month</th></tr></thead><tbody>
+  {% for f in top[:10] %}
+    <tr><td><span class="pill {{ f.priority }}">{{ f.priority }}</span></td><td>{{ f.title }}<br><span class="muted">{{ f.detail }}</span></td>
+      <td><code>{{ f.resource_id }}</code></td><td>{{ f.region }}</td><td class="num">{{ f.est_monthly_savings|usd }}</td></tr>
+  {% else %}
+    <tr><td colspan="5">No quantified savings found.</td></tr>
+  {% endfor %}
+  </tbody></table>
+
+  <h2>Findings by check</h2>
+  {% for cid, items in r.by_check().items() %}
+    {% set info = checks[cid] %}
+    <h3>{{ cid }} &middot; {{ info.title }} <span class="muted">({{ items|length }})</span></h3>
+    <p class="why">{{ info.why }}</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+    {% for f in items %}
+      <tr><td><code>{{ f.resource_id }}</code></td><td>{{ f.detail }}</td>
+        <td>{{ f.recommendation }}{% if f.fix_command %}<details><summary>Command (risk: {{ f.fix_risk }})</summary><pre>{{ f.fix_command }}</pre></details>{% endif %}</td>
+        <td>{{ f.region }}</td><td class="num">{{ f.monthly_cost|usd }}</td><td class="num">{{ f.est_monthly_savings|usd }}</td></tr>
+    {% endfor %}
+    </tbody></table>
+  {% endfor %}
+  {% if r.clean_checks %}<p class="muted">No issues for: {{ r.clean_checks|join(", ") }}.</p>{% endif %}
+
+  {% if r.errors %}
+  <h2>Checks that could not run</h2>
+  <ul>{% for e in r.errors %}<li><strong>{{ e.check }}</strong> in {{ e.region }}: {{ e.error }}</li>{% endfor %}</ul>
+  <p class="muted">Usually a missing read permission. The read-only policy in <code>policies/billdoctor-readonly.json</code> covers every check.</p>
+  {% endif %}
+
+  <h2>Method and assumptions</h2>
+  <ul>
+    <li>Only read-only API calls were made (describe/list/get and CloudWatch metrics over the last {{ r.lookback_days }} days).</li>
+    <li>Prices are approximate on-demand list prices ({{ r.prices_as_of }}); discounts, Savings Plans and Reserved Instances are not applied.</li>
+    <li>Savings are estimates. Confirm with the resource owner, and snapshot or back up before deleting anything.</li>
+    {% for n in r.notes %}<li>{{ n }}</li>{% endfor %}
+  </ul>
+
+  <footer>Generated by AWS Bill Doctor {{ version }} &middot; github.com/ObaidAbdullah16/aws-bill-doctor</footer>
+</main>
+<script>
+  // Print every fix command: closed <details> would hide them in the PDF (for browsers without ::details-content).
+  addEventListener("beforeprint", () => document.querySelectorAll("details").forEach(d => { d.dataset.wasOpen = d.open; d.open = true; }));
+  addEventListener("afterprint", () => document.querySelectorAll("details").forEach(d => { d.open = d.dataset.wasOpen === "true"; }));
+</script>
+</body>
+</html>

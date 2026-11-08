@@ -1,0 +1,85 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        python: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e ".[dev]" ruff
+      - run: ruff check billdoctor tests
+      - run: pytest -q -p no:warnings
+
+  sample-report:
+    name: Synthetic sample report
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.13"
+      - run: pip install -e ".[demo]"
+      - run: billdoctor demo --out sample-report
+      - run: billdoctor security demo --out sample-security-report
+      - run: billdoctor health-check --demo --out sample-health-check
+      - run: |
+          cat sample-report/report.md >> "$GITHUB_STEP_SUMMARY"
+          cat sample-security-report/report.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: sample-reports
+          path: |
+            sample-report/
+            sample-security-report/
+            sample-health-check/
+
+  iac:
+    name: IaC checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.13"
+      - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4
+        with:
+          terraform_version: "<1.18.0"
+          terraform_wrapper: false
+      - run: pip install cfn-lint shellcheck-py
+      - run: cfn-lint client-access/cloudformation-readonly-role.yaml
+      - run: shellcheck demo-account/run-demo.sh
+      - run: terraform fmt -check -recursive
+      - name: terraform validate
+        run: |
+          for d in terraform/examples/client client-access/terraform demo-account; do
+            terraform -chdir="$d" init -backend=false -input=false >/dev/null
+            terraform -chdir="$d" validate
+          done

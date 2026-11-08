@@ -1,0 +1,58 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SecurityCheckExtraReads",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:GetEbsEncryptionByDefault",
+        "ec2:GetSnapshotBlockPublicAccessState",
+        "ec2:GetInstanceMetadataDefaults",
+        "s3:GetAccountPublicAccessBlock",
+        "ecr:DescribeRegistry",
+        "ecr:GetRegistryScanningConfiguration",
+        "iam:GenerateCredentialReport",
+        "iam:GetCredentialReport",
+        "budgets:ViewBudget",
+        "ce:GetAnomalyMonitors",
+        "ce:GetAnomalySubscriptions"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyReadingData",
+      "Effect": "Deny",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "glacier:GetJobOutput",
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "rds-data:ExecuteStatement",
+        "rds-data:BatchExecuteStatement",
+        "secretsmanager:GetSecretValue",
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+        "ssm:GetParametersByPath",
+        "kms:Decrypt",
+        "logs:GetLogEvents",
+        "logs:FilterLogEvents",
+        "logs:StartQuery",
+        "athena:GetQueryResults",
+        "sqs:ReceiveMessage",
+        "kinesis:GetRecords",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer",
+        "lambda:GetFunction",
+        "ec2:GetPasswordData",
+        "ec2:GetConsoleOutput",
+        "ec2:GetConsoleScreenshot",
+        "codecommit:GetFile",
+        "codecommit:GetBlob"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

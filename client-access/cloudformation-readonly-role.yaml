@@ -1,0 +1,154 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  Read-only role for an AWS Bill Doctor audit: cost (S1) and, if enabled, the security
+  baseline check (S8). It can list resources, read configuration and CloudWatch metrics,
+  but cannot read your data (an explicit deny covers S3 objects, database rows, secret
+  values and log events) and cannot change anything. Delete this stack when the audit is finished.
+
+Parameters:
+  AuditorAccountId:
+    Type: String
+    AllowedPattern: "^[0-9]{12}$"
+    Description: AWS account ID of the auditor (given to you with this template).
+  ExternalId:
+    Type: String
+    MinLength: 16
+    NoEcho: true
+    Description: Shared secret given to you by the auditor (prevents the confused-deputy problem).
+  AllowCostExplorer:
+    Type: String
+    AllowedValues: ["true", "false"]
+    Default: "false"
+    Description: Allow reading the spend-by-service summary from Cost Explorer.
+  EnableSecurityCheck:
+    Type: String
+    AllowedValues: ["true", "false"]
+    Default: "false"
+    Description: >
+      Also allow the security baseline check: attaches the AWS-managed SecurityAudit and
+      ViewOnlyAccess policies (configuration metadata only) plus a few extra reads.
+
+Conditions:
+  CostExplorer: !Equals [!Ref AllowCostExplorer, "true"]
+  SecurityCheck: !Equals [!Ref EnableSecurityCheck, "true"]
+
+Resources:
+  BillDoctorReadOnlyRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: BillDoctorReadOnly
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Sub "arn:${AWS::Partition}:iam::${AuditorAccountId}:root"
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                sts:ExternalId: !Ref ExternalId
+      ManagedPolicyArns: !If
+        - SecurityCheck
+        - - !Sub "arn:${AWS::Partition}:iam::aws:policy/SecurityAudit"
+          - !Sub "arn:${AWS::Partition}:iam::aws:policy/job-function/ViewOnlyAccess"
+        - !Ref AWS::NoValue
+      Policies:
+        - PolicyName: billdoctor-readonly
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:DescribeAddresses
+                  - ec2:DescribeImages
+                  - ec2:DescribeInstances
+                  - ec2:DescribeNatGateways
+                  - ec2:DescribeRegions
+                  - ec2:DescribeSnapshots
+                  - ec2:DescribeVolumes
+                  - elasticloadbalancing:DescribeLoadBalancers
+                  - elasticloadbalancing:DescribeTargetGroups
+                  - elasticloadbalancing:DescribeTargetHealth
+                  - cloudwatch:GetMetricStatistics
+                  - rds:DescribeDBInstances
+                  - logs:DescribeLogGroups
+                  - s3:ListAllMyBuckets
+                  - s3:GetBucketLocation
+                  - s3:GetBucketVersioning
+                  - s3:GetLifecycleConfiguration
+                Resource: "*"
+              - !If
+                - CostExplorer
+                - Effect: Allow
+                  Action: ce:GetCostAndUsage
+                  Resource: "*"
+                - !Ref AWS::NoValue
+        - PolicyName: never-read-data
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: DenyReadingData
+                Effect: Deny
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - glacier:GetJobOutput
+                  - dynamodb:GetItem
+                  - dynamodb:BatchGetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - rds-data:ExecuteStatement
+                  - rds-data:BatchExecuteStatement
+                  - secretsmanager:GetSecretValue
+                  - ssm:GetParameter
+                  - ssm:GetParameters
+                  - ssm:GetParametersByPath
+                  - kms:Decrypt
+                  - logs:GetLogEvents
+                  - logs:FilterLogEvents
+                  - logs:StartQuery
+                  - athena:GetQueryResults
+                  - sqs:ReceiveMessage
+                  - kinesis:GetRecords
+                  - ecr:BatchGetImage
+                  - ecr:GetDownloadUrlForLayer
+                  - lambda:GetFunction
+                  - ec2:GetPasswordData
+                  - ec2:GetConsoleOutput
+                  - ec2:GetConsoleScreenshot
+                  - codecommit:GetFile
+                  - codecommit:GetBlob
+                Resource: "*"
+        - !If
+          - SecurityCheck
+          - PolicyName: security-check-extra-reads
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Sid: SecurityCheckExtraReads
+                  Effect: Allow
+                  Action:
+                    - ec2:GetEbsEncryptionByDefault
+                    - ec2:GetSnapshotBlockPublicAccessState
+                    - ec2:GetInstanceMetadataDefaults
+                    - s3:GetAccountPublicAccessBlock
+                    - ecr:DescribeRegistry
+                    - ecr:GetRegistryScanningConfiguration
+                    - iam:GenerateCredentialReport
+                    - iam:GetCredentialReport
+                    - budgets:ViewBudget
+                    - ce:GetAnomalyMonitors
+                    - ce:GetAnomalySubscriptions
+                  Resource: "*"
+          - !Ref AWS::NoValue
+      Tags:
+        - Key: Purpose
+          Value: !If [SecurityCheck, cost-and-security-audit, cost-audit]
+        - Key: DeleteAfter
+          Value: audit-complete
+
+Outputs:
+  RoleArn:
+    Description: Send this ARN to the auditor.
+    Value: !GetAtt BillDoctorReadOnlyRole.Arn

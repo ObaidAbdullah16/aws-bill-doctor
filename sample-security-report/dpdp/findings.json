@@ -1,0 +1,941 @@
+{
+  "tool": "aws-bill-doctor security baseline check",
+  "account_id": "123456789012",
+  "account_label": "Acme Retail (synthetic demo)",
+  "regions": [
+    "ap-south-1"
+  ],
+  "started_at": "2026-11-02T11:39:45+00:00",
+  "engine": "prowler",
+  "engine_version": "5.47.0",
+  "profile": "dpdp",
+  "synthetic_data": true,
+  "score": 31,
+  "grade": "F",
+  "coverage_percent": 83,
+  "status_counts": {
+    "fail": 15,
+    "pass": 6,
+    "manual": 0,
+    "no-resources": 1,
+    "not-evaluated": 3
+  },
+  "failing_by_severity": {
+    "critical": 3,
+    "high": 5,
+    "medium": 6,
+    "low": 1
+  },
+  "controls": [
+    {
+      "id": "ID-01",
+      "group": "Identity and access",
+      "title": "Root user is protected (MFA on, no access keys)",
+      "severity": "critical",
+      "status": "not-evaluated",
+      "summary": "not evaluated (the scanner returned no result - see Method)",
+      "why": "The root user can do everything, including closing the account. A stolen root password or key is a total loss.",
+      "prowler_checks": [
+        "iam_root_mfa_enabled",
+        "iam_no_root_access_key"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "",
+        "console": "Sign in as root > Security credentials > assign an MFA device (passkey or hardware key); delete any root access keys. In AWS Organizations, turn on centralized root access management for member accounts."
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "ID-02",
+      "group": "Identity and access",
+      "title": "Every console user has MFA",
+      "severity": "high",
+      "status": "fail",
+      "summary": "1 failing item, 1 passing",
+      "why": "Passwords get phished and reused. MFA stops most account takeovers.",
+      "prowler_checks": [
+        "iam_user_mfa_enabled_console_access"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 2.10"
+      ],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "aws iam list-virtual-mfa-devices  # find users without a device, then enable MFA for each, or move people to IAM Identity Center",
+        "console": "IAM > Users > (user) > Security credentials > Assign MFA device."
+      },
+      "failing": [
+        {
+          "check_id": "iam_user_mfa_enabled_console_access",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:iam::123456789012:user/priya.sharma",
+          "resource_type": "AwsIamUser",
+          "resource_name": "priya.sharma",
+          "message": "User priya.sharma has Console Password enabled but MFA disabled.",
+          "prowler_severity": "High",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 1
+    },
+    {
+      "id": "ID-03",
+      "group": "Identity and access",
+      "title": "Access keys are rotated and unused keys removed",
+      "severity": "high",
+      "status": "pass",
+      "summary": "6 items checked, all passing",
+      "why": "Long-lived keys leak through laptops, CI logs and git history. Datadog found active keys over a year old at 59% of IAM users.",
+      "prowler_checks": [
+        "iam_rotate_access_key_90_days",
+        "iam_user_accesskey_unused",
+        "iam_user_console_access_unused"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 2.11",
+        "CIS-7.0 2.12"
+      ],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "aws iam update-access-key --user-name <user> --access-key-id <key> --status Inactive   # then delete once nothing breaks\naws iam delete-access-key --user-name <user> --access-key-id <key>",
+        "console": ""
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 6
+    },
+    {
+      "id": "ID-04",
+      "group": "Identity and access",
+      "title": "People get permissions through groups, roles or SSO - not attached to users",
+      "severity": "medium",
+      "status": "fail",
+      "summary": "1 failing item, 1 passing",
+      "why": "Permissions attached user by user drift and are never reviewed. Groups, roles and IAM Identity Center keep access auditable.",
+      "prowler_checks": [
+        "iam_policy_attached_only_to_group_or_roles"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 2.13"
+      ],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "aws iam detach-user-policy --user-name <user> --policy-arn <arn>   # after adding the user to a group with the same rights",
+        "console": "Prefer IAM Identity Center: one login per person, permission sets per job, no long-lived keys."
+      },
+      "failing": [
+        {
+          "check_id": "iam_policy_attached_only_to_group_or_roles",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:iam::123456789012:user/ci-deploy",
+          "resource_type": "AwsIamUser",
+          "resource_name": "ci-deploy/AdministratorAccess",
+          "message": "User ci-deploy has the policy AdministratorAccess attached.",
+          "prowler_severity": "Low",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 1
+    },
+    {
+      "id": "ID-05",
+      "group": "Identity and access",
+      "title": "Full administrator rights are limited to a break-glass role",
+      "severity": "high",
+      "status": "fail",
+      "summary": "1 failing item, 1 passing",
+      "why": "Every identity with AdministratorAccess is a way to lose the whole account. Most teams need two or three, not ten.",
+      "prowler_checks": [
+        "iam_aws_attached_policy_no_administrative_privileges",
+        "iam_customer_attached_policy_no_administrative_privileges",
+        "iam_inline_policy_no_administrative_privileges"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 2.14"
+      ],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AdministratorAccess",
+        "console": "Replace AdministratorAccess with job-based policies (PowerUserAccess, ReadOnlyAccess, or service-scoped). Keep one MFA-protected break-glass role."
+      },
+      "failing": [
+        {
+          "check_id": "iam_aws_attached_policy_no_administrative_privileges",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:iam::aws:policy/AdministratorAccess",
+          "resource_type": "AwsIamPolicy",
+          "resource_name": "AdministratorAccess",
+          "message": "AWS policy AdministratorAccess is attached and allows '*:*' administrative privileges.",
+          "prowler_severity": "Critical",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 1
+    },
+    {
+      "id": "ID-06",
+      "group": "Identity and access",
+      "title": "Password policy requires long, non-reused passwords",
+      "severity": "low",
+      "status": "pass",
+      "summary": "2 items checked, all passing",
+      "why": "Only matters for IAM users with console access, but auditors and customer questionnaires ask for it.",
+      "prowler_checks": [
+        "iam_password_policy_minimum_length_14",
+        "iam_password_policy_reuse_24"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 2.8",
+        "CIS-7.0 2.9"
+      ],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: iam_password_policy = true",
+        "cli": "aws iam update-account-password-policy --minimum-password-length 14 --password-reuse-prevention 24 --require-symbols --require-numbers --require-uppercase-characters --require-lowercase-characters",
+        "console": ""
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 2
+    },
+    {
+      "id": "ID-07",
+      "group": "Identity and access",
+      "title": "IAM Access Analyzer watches for external access",
+      "severity": "medium",
+      "status": "not-evaluated",
+      "summary": "not evaluated (the scanner returned no result - see Method)",
+      "why": "It flags buckets, roles and keys shared with other accounts or the public - for free.",
+      "prowler_checks": [
+        "accessanalyzer_enabled"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: access_analyzer = true",
+        "cli": "aws accessanalyzer create-analyzer --analyzer-name account-analyzer --type ACCOUNT",
+        "console": ""
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "LD-01",
+      "group": "Logging and detection",
+      "title": "CloudTrail records every region, with tamper-evident, private logs",
+      "severity": "critical",
+      "status": "pass",
+      "summary": "3 items checked, all passing",
+      "why": "Without CloudTrail there is no record of who did what - no investigation, and no basis for a breach report.",
+      "prowler_checks": [
+        "cloudtrail_multi_region_enabled",
+        "cloudtrail_log_file_validation_enabled",
+        "cloudtrail_logs_s3_bucket_is_not_publicly_accessible"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-2.0 3.3",
+        "CIS-7.0 4.1",
+        "CIS-7.0 4.2"
+      ],
+      "dpdp_areas": [
+        "Logging and monitoring (logs kept at least one year)",
+        "Breach detection and 72-hour response"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: cloudtrail = true   # multi-region trail, log-file validation, private encrypted bucket",
+        "cli": "aws cloudtrail create-trail --name org-trail --s3-bucket-name <bucket> --is-multi-region-trail --enable-log-file-validation\naws cloudtrail start-logging --name org-trail",
+        "console": ""
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 3
+    },
+    {
+      "id": "LD-02",
+      "group": "Logging and detection",
+      "title": "GuardDuty threat detection is on",
+      "severity": "high",
+      "status": "fail",
+      "summary": "1 failing item",
+      "why": "GuardDuty spots stolen credentials, crypto-mining and unusual API calls. Costs a few dollars a month for small accounts.",
+      "prowler_checks": [
+        "guardduty_is_enabled"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Breach detection and 72-hour response"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: guardduty = true",
+        "cli": "aws guardduty create-detector --enable --finding-publishing-frequency FIFTEEN_MINUTES",
+        "console": ""
+      },
+      "failing": [
+        {
+          "check_id": "guardduty_is_enabled",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:guardduty:ap-south-1:123456789012:detector/unknown",
+          "resource_type": "AwsGuardDutyDetector",
+          "resource_name": "detector/unknown",
+          "message": "GuardDuty is not enabled.",
+          "prowler_severity": "High",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "LD-03",
+      "group": "Logging and detection",
+      "title": "AWS Config records configuration changes",
+      "severity": "medium",
+      "status": "fail",
+      "summary": "1 failing item",
+      "why": "Config keeps a history of how each resource was configured - the evidence auditors and investigators ask for.",
+      "prowler_checks": [
+        "config_recorder_all_regions_enabled"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 4.3"
+      ],
+      "dpdp_areas": [
+        "Logging and monitoring (logs kept at least one year)"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: config_recorder = true",
+        "cli": "",
+        "console": "AWS Config > Get started > record all resources > deliver to the CloudTrail logs bucket."
+      },
+      "failing": [
+        {
+          "check_id": "config_recorder_all_regions_enabled",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:config:ap-south-1:123456789012:recorder",
+          "resource_type": "Other",
+          "resource_name": "123456789012",
+          "message": "AWS Config recorder 123456789012 is disabled.",
+          "prowler_severity": "Medium",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "LD-04",
+      "group": "Logging and detection",
+      "title": "Log groups keep logs for at least a year",
+      "severity": "medium",
+      "status": "fail",
+      "summary": "1 failing item, 1 passing",
+      "why": "Logs kept for days or weeks are gone when an incident is found months later. One year is the minimum many customers - and India's DPDP Rules - expect for security logs. ('Never expire' passes here; the cost check LOGS-001 flags its price.)",
+      "prowler_checks": [
+        "cloudwatch_log_group_retention_policy_specific_days_enabled"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Logging and monitoring (logs kept at least one year)"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "bash aws-foundation/fix-pack/scripts/set-log-retention.sh --days 365   # dry run first; add --apply to change",
+        "console": ""
+      },
+      "failing": [
+        {
+          "check_id": "cloudwatch_log_group_retention_policy_specific_days_enabled",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:logs:ap-south-1:123456789012:log-group:/acme/api:*",
+          "resource_type": "AwsLogsLogGroup",
+          "resource_name": "/acme/api",
+          "message": "Log Group /acme/api has less than 365 days retention period (7 days).",
+          "prowler_severity": "Medium",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 1
+    },
+    {
+      "id": "LD-05",
+      "group": "Logging and detection",
+      "title": "Spend alerts would catch abuse within a day",
+      "severity": "medium",
+      "status": "pass",
+      "summary": "1 item checked, all passing",
+      "why": "A stolen key used for crypto-mining shows up first on the bill. Budgets with email alerts are free.",
+      "prowler_checks": [],
+      "native_check": "spend_alerts",
+      "cis": [],
+      "dpdp_areas": [
+        "Breach detection and 72-hour response"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: monthly_budget_usd = <amount>, alert_emails = [...]  (or aws-bill-doctor/terraform/budget-guard)",
+        "cli": "",
+        "console": ""
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 1
+    },
+    {
+      "id": "DA-01",
+      "group": "Data protection",
+      "title": "S3 Block Public Access is on for the whole account",
+      "severity": "critical",
+      "status": "not-evaluated",
+      "summary": "not evaluated (the scanner returned no result - see Method)",
+      "why": "One account-wide switch stops any bucket from being made public by mistake - the cause of many data leaks.",
+      "prowler_checks": [
+        "s3_account_level_public_access_blocks"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Access control",
+        "Encryption, masking and secrets"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: s3_account_public_access_block = true",
+        "cli": "aws s3control put-public-access-block --account-id <account> --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true",
+        "console": ""
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "DA-02",
+      "group": "Data protection",
+      "title": "No bucket is public",
+      "severity": "critical",
+      "status": "fail",
+      "summary": "1 failing item, 11 passing",
+      "why": "Public buckets are found by automated scanners within hours.",
+      "prowler_checks": [
+        "s3_bucket_public_access",
+        "s3_bucket_policy_public_write_access",
+        "s3_bucket_public_list_acl",
+        "s3_bucket_public_write_acl"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 2.21"
+      ],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "aws s3api put-public-access-block --bucket <bucket> --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true\n# if the bucket serves a website, put CloudFront with origin access control in front instead",
+        "console": ""
+      },
+      "failing": [
+        {
+          "check_id": "s3_bucket_public_access",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:s3:::acme-demo-uploads",
+          "resource_type": "AwsS3Bucket",
+          "resource_name": "acme-demo-uploads",
+          "message": "S3 Bucket acme-demo-uploads has public access due to bucket policy.",
+          "prowler_severity": "Critical",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 11
+    },
+    {
+      "id": "DA-03",
+      "group": "Data protection",
+      "title": "Data is encrypted by default (S3 and EBS)",
+      "severity": "medium",
+      "status": "fail",
+      "summary": "1 failing item, 3 passing",
+      "why": "Default encryption is free and protects disks, snapshots and buckets that get copied or shared by mistake.",
+      "prowler_checks": [
+        "s3_bucket_default_encryption",
+        "ec2_ebs_default_encryption"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-1.5 2.1.1",
+        "CIS-7.0 6.1.1"
+      ],
+      "dpdp_areas": [
+        "Encryption, masking and secrets"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: ebs_encryption_by_default = true",
+        "cli": "aws ec2 enable-ebs-encryption-by-default --region <region>",
+        "console": ""
+      },
+      "failing": [
+        {
+          "check_id": "ec2_ebs_default_encryption",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:ec2:ap-south-1:123456789012:volume",
+          "resource_type": "AwsEc2Volume",
+          "resource_name": "123456789012",
+          "message": "EBS Default Encryption is not activated.",
+          "prowler_severity": "High",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 3
+    },
+    {
+      "id": "DA-04",
+      "group": "Data protection",
+      "title": "Databases are encrypted, private, backed up and protected from deletion",
+      "severity": "high",
+      "status": "pass",
+      "summary": "4 items checked, all passing",
+      "why": "An RDS instance reachable from the internet, without backups, is one mistake away from a data leak or permanent loss.",
+      "prowler_checks": [
+        "rds_instance_storage_encrypted",
+        "rds_instance_no_public_access",
+        "rds_instance_backup_enabled",
+        "rds_instance_deletion_protection"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 3.2.1",
+        "CIS-7.0 3.2.3"
+      ],
+      "dpdp_areas": [
+        "Encryption, masking and secrets",
+        "Access control",
+        "Backups and continuity"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "aws rds modify-db-instance --db-instance-identifier <db> --backup-retention-period 7 --deletion-protection --no-publicly-accessible --apply-immediately\n# encryption at rest needs a new instance: snapshot -> copy with --kms-key-id -> restore -> switch over",
+        "console": ""
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 4
+    },
+    {
+      "id": "DA-05",
+      "group": "Data protection",
+      "title": "No snapshot is public",
+      "severity": "critical",
+      "status": "pass",
+      "summary": "4 items checked, all passing",
+      "why": "A public EBS or RDS snapshot hands a full copy of the disk or database to anyone.",
+      "prowler_checks": [
+        "ec2_ebs_public_snapshot",
+        "rds_snapshots_public_access"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: ebs_snapshot_block_public_access = true",
+        "cli": "aws ec2 modify-snapshot-attribute --snapshot-id <snap> --attribute createVolumePermission --operation-type remove --group-names all\naws rds modify-db-snapshot-attribute --db-snapshot-identifier <snap> --attribute-name restore --values-to-remove all",
+        "console": ""
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 4
+    },
+    {
+      "id": "NC-01",
+      "group": "Network and compute",
+      "title": "No SSH, RDP or database port is open to the whole internet",
+      "severity": "critical",
+      "status": "fail",
+      "summary": "1 failing item, 4 passing",
+      "why": "Open admin and database ports are scanned constantly; one weak password or unpatched service is enough.",
+      "prowler_checks": [
+        "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_22",
+        "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_3389",
+        "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_mysql_3306",
+        "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_postgres_5432",
+        "ec2_securitygroup_allow_ingress_from_internet_to_all_ports"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 6.3",
+        "CIS-7.0 6.4"
+      ],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "aws ec2 revoke-security-group-ingress --group-id <sg> --protocol tcp --port 22 --cidr 0.0.0.0/0\n# use SSM Session Manager (no open port) or a VPN/allow-list instead",
+        "console": ""
+      },
+      "failing": [
+        {
+          "check_id": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_22",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:ec2:ap-south-1:123456789012:security-group/sg-1c5d8088dba90bc1a",
+          "resource_type": "AwsEc2SecurityGroup",
+          "resource_name": "sg-1c5d8088dba90bc1a",
+          "message": "Security group api (sg-1c5d8088dba90bc1a) has SSH port 22 open to the Internet.",
+          "prowler_severity": "High",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 4
+    },
+    {
+      "id": "NC-02",
+      "group": "Network and compute",
+      "title": "Default security groups allow no traffic",
+      "severity": "low",
+      "status": "no-resources",
+      "summary": "no matching resources in the scanned regions",
+      "why": "Resources launched without a chosen group land in the default one; it should block everything.",
+      "prowler_checks": [
+        "ec2_securitygroup_default_restrict_traffic"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: default_security_group_vpc_ids = [\"vpc-...\"]   # check nothing uses the group first",
+        "cli": "",
+        "console": ""
+      },
+      "failing": [],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "NC-03",
+      "group": "Network and compute",
+      "title": "Instances require IMDSv2",
+      "severity": "high",
+      "status": "fail",
+      "summary": "1 failing item",
+      "why": "IMDSv1 lets an SSRF bug in a web app read the instance's cloud credentials (the Capital One breach). Datadog found IMDSv2 enforced on only 49% of instances.",
+      "prowler_checks": [
+        "ec2_instance_imdsv2_enabled",
+        "ec2_instance_account_imdsv2_enabled"
+      ],
+      "native_check": null,
+      "cis": [
+        "CIS-7.0 6.7"
+      ],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "module.security_baseline: ec2_imdsv2_default = true   # new instances",
+        "cli": "bash aws-foundation/fix-pack/scripts/require-imdsv2.sh --regions <region>   # dry run lists instances; --apply after testing one\naws ec2 modify-instance-metadata-options --instance-id <id> --http-tokens required --http-put-response-hop-limit 2",
+        "console": ""
+      },
+      "failing": [
+        {
+          "check_id": "ec2_instance_imdsv2_enabled",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:ec2:ap-south-1:123456789012:instance/i-2d70a6f89d6a8d1bd",
+          "resource_type": "AwsEc2Instance",
+          "resource_name": "i-2d70a6f89d6a8d1bd",
+          "message": "EC2 Instance i-2d70a6f89d6a8d1bd has IMDSv2 disabled or not required.",
+          "prowler_severity": "High",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "NC-04",
+      "group": "Network and compute",
+      "title": "Only intended instances have public IP addresses",
+      "severity": "medium",
+      "status": "fail",
+      "summary": "1 failing item",
+      "why": "Every public instance is attack surface (and costs $3.65 a month per IPv4 address). Most belong behind a load balancer.",
+      "prowler_checks": [
+        "ec2_instance_public_ip"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "",
+        "console": "Move workloads to private subnets behind a load balancer; reach them with SSM Session Manager. Keep a public IP only where it is intended, and note it in the report."
+      },
+      "failing": [
+        {
+          "check_id": "ec2_instance_public_ip",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:ec2:ap-south-1:123456789012:instance/i-2d70a6f89d6a8d1bd",
+          "resource_type": "AwsEc2Instance",
+          "resource_name": "i-2d70a6f89d6a8d1bd",
+          "message": "EC2 Instance i-2d70a6f89d6a8d1bd has a Public IP: 54.214.72.161 (ec2-54-214-72-161.ap-south-1.compute.amazonaws.com).",
+          "prowler_severity": "Medium",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "SP-01",
+      "group": "Secrets and pipelines",
+      "title": "No secrets in Lambda variables, EC2 user data or launch templates",
+      "severity": "critical",
+      "status": "fail",
+      "summary": "1 failing item, 1 passing",
+      "why": "Anyone with read-only access - including auditors and many SaaS tools - can read these fields.",
+      "prowler_checks": [
+        "awslambda_function_no_secrets_in_variables",
+        "ec2_instance_secrets_user_data",
+        "ec2_launch_template_no_secrets"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Encryption, masking and secrets"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "",
+        "console": "Move each value to Secrets Manager or SSM Parameter Store (SecureString), read it at runtime, then rotate it - it must be treated as exposed."
+      },
+      "failing": [
+        {
+          "check_id": "awslambda_function_no_secrets_in_variables",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:lambda:ap-south-1:123456789012:function:acme-invoice-mailer",
+          "resource_type": "AwsLambdaFunction",
+          "resource_name": "acme-invoice-mailer",
+          "message": "Potential secret found in Lambda function acme-invoice-mailer variables -> SMTP Credentials in variable SMTP_PASSWORD, Generic Password in variable SMTP_PASSWORD.",
+          "prowler_severity": "Critical",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 1
+    },
+    {
+      "id": "SP-02",
+      "group": "Secrets and pipelines",
+      "title": "Secrets Manager secrets rotate automatically",
+      "severity": "medium",
+      "status": "fail",
+      "summary": "1 failing item",
+      "why": "A secret that never changes stays valid after every leak.",
+      "prowler_checks": [
+        "secretsmanager_automatic_rotation_enabled"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [
+        "Encryption, masking and secrets"
+      ],
+      "fix": {
+        "terraform": "",
+        "cli": "aws secretsmanager rotate-secret --secret-id <id> --rotation-lambda-arn <arn> --rotation-rules AutomaticallyAfterDays=90",
+        "console": ""
+      },
+      "failing": [
+        {
+          "check_id": "secretsmanager_automatic_rotation_enabled",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:secretsmanager:ap-south-1:123456789012:secret:acme/prod/db-zTNKUh",
+          "resource_type": "AwsSecretsManagerSecret",
+          "resource_name": "acme/prod/db",
+          "message": "SecretsManager secret acme/prod/db has rotation disabled.",
+          "prowler_severity": "High",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "SP-03",
+      "group": "Secrets and pipelines",
+      "title": "CI/CD logs in with short-lived OIDC credentials, not stored keys",
+      "severity": "high",
+      "status": "fail",
+      "summary": "1 failing item",
+      "why": "Keys stored in CI were stolen in the tj-actions, Trivy and Checkmarx incidents. OIDC tokens expire in minutes.",
+      "prowler_checks": [],
+      "native_check": "ci_oidc",
+      "cis": [],
+      "dpdp_areas": [
+        "Access control"
+      ],
+      "fix": {
+        "terraform": "gha-hardening-kit/terraform/github-oidc-role (service S2)",
+        "cli": "",
+        "console": "Create an OIDC role trusted only by your repository's main branch or a protected environment, switch the workflow to role-to-assume, then delete the old access key."
+      },
+      "failing": [
+        {
+          "check_id": "native:ci_oidc",
+          "status": "FAIL",
+          "region": "global",
+          "resource_uid": "arn:aws:iam::123456789012:user/ci-deploy",
+          "resource_type": "AwsIamUser",
+          "resource_name": "ci-deploy",
+          "message": "IAM user 'ci-deploy' looks like a CI/CD identity and has an active access key (created 2026-11-02); replace it with an OIDC role",
+          "prowler_severity": "",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    },
+    {
+      "id": "SP-04",
+      "group": "Secrets and pipelines",
+      "title": "Container images are scanned on push and tags are immutable",
+      "severity": "low",
+      "status": "fail",
+      "summary": "3 failing items",
+      "why": "Scanning catches known vulnerabilities before deployment; immutable tags stop a pushed image being silently replaced.",
+      "prowler_checks": [
+        "ecr_registry_scan_images_on_push_enabled",
+        "ecr_repositories_scan_images_on_push_enabled",
+        "ecr_repositories_tag_immutability"
+      ],
+      "native_check": null,
+      "cis": [],
+      "dpdp_areas": [],
+      "fix": {
+        "terraform": "module.security_baseline: ecr_scan_on_push = true",
+        "cli": "aws ecr put-image-tag-mutability --repository-name <repo> --image-tag-mutability IMMUTABLE",
+        "console": ""
+      },
+      "failing": [
+        {
+          "check_id": "ecr_registry_scan_images_on_push_enabled",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:ecr:ap-south-1:123456789012:registry/123456789012",
+          "resource_type": "Other",
+          "resource_name": "123456789012",
+          "message": "ECR registry 123456789012 has BASIC scanning without automated scanning enabled.",
+          "prowler_severity": "Medium",
+          "muted": false
+        },
+        {
+          "check_id": "ecr_repositories_scan_images_on_push_enabled",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:ecr:ap-south-1:123456789012:repository/acme/api",
+          "resource_type": "AwsEcrRepository",
+          "resource_name": "acme/api",
+          "message": "ECR repository acme/api has scan on push disabled.",
+          "prowler_severity": "Medium",
+          "muted": false
+        },
+        {
+          "check_id": "ecr_repositories_tag_immutability",
+          "status": "FAIL",
+          "region": "ap-south-1",
+          "resource_uid": "arn:aws:ecr:ap-south-1:123456789012:repository/acme/api",
+          "resource_type": "AwsEcrRepository",
+          "resource_name": "acme/api",
+          "message": "Repository acme/api does not have immutability configured.",
+          "prowler_severity": "Medium",
+          "muted": false
+        }
+      ],
+      "manual": [],
+      "muted": [],
+      "passing_count": 0
+    }
+  ],
+  "errors": [],
+  "notes": [
+    "Not evaluated in the simulator (ID-01, ID-07, DA-01): it has no root user, IAM Access Analyzer or account-level S3 settings. A scan of a real account evaluates them."
+  ]
+}

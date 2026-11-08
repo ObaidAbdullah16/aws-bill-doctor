@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aws-bill-doctor"
+dynamic = ["version"]
+description = "Read-only AWS audits: 12 cost checks with savings estimates, and a 25-control security baseline built on Prowler"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Obaid Abdullah" }]
+dependencies = ["boto3>=1.34", "jinja2>=3.1"]
+
+[project.optional-dependencies]
+demo = ["moto[ec2,s3,rds,logs,cloudwatch,elbv2]>=5.0"]
+dev = ["pytest>=8", "moto[ec2,s3,rds,logs,cloudwatch,elbv2]>=5.0"]
+
+[project.scripts]
+billdoctor = "billdoctor.cli:main"
+
+[tool.setuptools]
+packages = ["billdoctor", "billdoctor.checks", "billdoctor.security"]
+
+[tool.setuptools.package-data]
+billdoctor = ["templates/*.j2", "data/*.json"]
+
+[tool.setuptools.dynamic]
+version = { attr = "billdoctor.__version__" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]

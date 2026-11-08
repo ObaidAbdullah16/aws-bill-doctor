@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS Health Check - {{ c.account_label or s.account_label or c.account_id }}</title>
+<style>
+:root{--bg:#f5f6f8;--fg:#18202e;--card:#fff;--line:#dfe3e8;--muted:#5b6475;--accent:#0b6bcb;--critical:#8e1b1b;--high:#c62828;--medium:#b26a00;--low:#2e7d32}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1116;--fg:#e8edf3;--card:#161b22;--line:#2d333b;--muted:#94a0b0;--accent:#58a6ff;--critical:#ff8f8f;--high:#f47067;--medium:#d29922;--low:#57ab5a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:26px;margin:0}h2{font-size:19px;margin:30px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.muted{color:var(--muted)}
+.banner{background:#fff4ce;color:#5c4400;border:1px solid #e3c35a;border-radius:8px;padding:10px 14px;margin:14px 0;font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card .v{font-size:28px;font-weight:700}.card .l{color:var(--muted);font-size:13px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+ol{padding-left:20px}li{margin:4px 0}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid currentColor}
+.critical{color:var(--critical)}.high{color:var(--high)}.medium{color:var(--medium)}.low{color:var(--low)}
+a{color:var(--accent)}
+footer{margin-top:40px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<main>
+  <h1>AWS Health Check: cost and security</h1>
+  <div class="muted">Account {{ c.account_label or s.account_label or c.account_id }} &middot; one read-only role &middot; {{ c.started_at.strftime("%d %b %Y") }}</div>
+  {% if c.synthetic or s.synthetic %}<div class="banner">SYNTHETIC DEMO DATA &mdash; simulated accounts; no customer data.</div>{% endif %}
+  <div class="cards">
+    <div class="card"><div class="l">Estimated savings</div><div class="v">${{ "{:,.0f}".format(c.monthly_savings) }}/mo</div><div class="l">${{ "{:,.0f}".format(c.monthly_savings * 12) }} a year &middot; {{ c.findings|length }} findings</div></div>
+    <div class="card"><div class="l">Security baseline</div><div class="v">{{ s.score }}/100 ({{ s.grade }})</div><div class="l">{{ s.counts()["fail"] }} of {{ s.results|length }} controls failing</div></div>
+    {% set fs = s.failing_by_severity() %}
+    <div class="card"><div class="l">Fix first</div><div class="v">{{ fs.critical + fs.high }}</div><div class="l">critical/high security gaps &middot; {{ c.quick_wins|length }} low-risk cost fixes</div></div>
+  </div>
+  <div class="two">
+    <div><h2>Top savings</h2><ol>
+      {% for f in (c.findings|selectattr("est_monthly_savings")|sort(attribute="est_monthly_savings", reverse=true)|list)[:5] %}
+        <li>{{ f.title }} <code>{{ f.resource_id }}</code> &mdash; ${{ "{:,.2f}".format(f.est_monthly_savings) }}/mo</li>
+      {% else %}<li>No quantified savings found.</li>{% endfor %}
+    </ol><a href="cost/report.html">Full cost report &rarr;</a></div>
+    <div><h2>Top security risks</h2><ol>
+      {% for r in s.top_risks(5) %}<li><span class="pill {{ r.control.severity }}">{{ r.control.severity }}</span> {{ r.control.title }}</li>
+      {% else %}<li>No failing controls.</li>{% endfor %}
+    </ol><a href="security/report.html">Full security report &rarr;</a></div>
+  </div>
+  <h2>What happens next</h2>
+  <ol>
+    <li>45-minute walkthrough: we go through both reports and agree what to fix first.</li>
+    <li>You apply the fixes (Terraform fix pack, commands or console steps); nothing is ever changed with the audit role.</li>
+    <li>Retest one to two weeks later: a new scan shows the new score and the savings that held.</li>
+    <li>You delete the audit role. Scan files are deleted after the agreed retention period.</li>
+  </ol>
+  <footer>AWS Bill Doctor {{ version }} &middot; github.com/ObaidAbdullah16/aws-bill-doctor</footer>
+</main>
+</body>
+</html>

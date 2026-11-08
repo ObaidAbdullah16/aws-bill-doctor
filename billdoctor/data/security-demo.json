@@ -1,0 +1,6418 @@
+{
+ "note": "Real Prowler checks run against a SIMULATED account (moto). Fictional company; no customer data.",
+ "account_label": "Acme Retail (synthetic demo)",
+ "regions": [
+  "ap-south-1"
+ ],
+ "stage": "before",
+ "prowler": [
+  {
+   "message": "Potential secret found in Lambda function acme-invoice-mailer variables -> SMTP Credentials in variable SMTP_PASSWORD, Generic Password in variable SMTP_PASSWORD.",
+   "metadata": {
+    "event_code": "awslambda_function_no_secrets_in_variables",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "Potential secret found in Lambda function acme-invoice-mailer variables -> SMTP Credentials in variable SMTP_PASSWORD, Generic Password in variable SMTP_PASSWORD.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "awslambda",
+     "name": "Lambda function environment variables do not contain secrets",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "awslambda_function_no_secrets_in_variables"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Unsecured Credentials",
+       "src_url": "https://attack.mitre.org/techniques/T1552/",
+       "uid": "T1552"
+      }
+     }
+    ],
+    "title": "Lambda function environment variables do not contain secrets",
+    "uid": "prowler-aws-awslambda_function_no_secrets_in_variables-123456789012-ap-south-1-acme-invoice-mailer"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-invoice-mailer",
+     "type": "AwsLambdaFunction",
+     "uid": "arn:aws:lambda:ap-south-1:123456789012:function:acme-invoice-mailer"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Multiregion trail acme-trail has log file validation enabled.",
+   "metadata": {
+    "event_code": "cloudtrail_log_file_validation_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "Multiregion trail acme-trail has log file validation enabled.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "3.2"
+     ],
+     "CIS-1.4": [
+      "3.2"
+     ],
+     "CIS-6.0": [
+      "4.2"
+     ],
+     "CIS-2.0": [
+      "3.2"
+     ],
+     "CIS-1.5": [
+      "3.2"
+     ],
+     "CIS-3.0": [
+      "3.2"
+     ],
+     "CIS-7.0": [
+      "4.2"
+     ],
+     "CIS-5.0": [
+      "3.2"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "cloudtrail",
+     "name": "CloudTrail trail has log file validation enabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "cloudtrail_log_file_validation_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "CloudTrail trail has log file validation enabled",
+    "uid": "prowler-aws-cloudtrail_log_file_validation_enabled-123456789012-ap-south-1-acme-trail"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-trail",
+     "type": "AwsCloudTrailTrail",
+     "uid": "arn:aws:cloudtrail:ap-south-1:123456789012:trail/acme-trail"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-trail from multiregion trail acme-trail is not publicly accessible.",
+   "metadata": {
+    "event_code": "cloudtrail_logs_s3_bucket_is_not_publicly_accessible",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-trail from multiregion trail acme-trail is not publicly accessible.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-1.4": [
+      "3.3"
+     ],
+     "CIS-2.0": [
+      "3.3"
+     ],
+     "CIS-1.5": [
+      "3.3"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "cloudtrail",
+     "name": "CloudTrail trail S3 bucket is not publicly accessible",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "cloudtrail_logs_s3_bucket_is_not_publicly_accessible"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "CloudTrail trail S3 bucket is not publicly accessible",
+    "uid": "prowler-aws-cloudtrail_logs_s3_bucket_is_not_publicly_accessible-123456789012-ap-south-1-acme-trail"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-trail",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:cloudtrail:ap-south-1:123456789012:trail/acme-trail"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Trail acme-trail is multiregion and it is logging.",
+   "metadata": {
+    "event_code": "cloudtrail_multi_region_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "Trail acme-trail is multiregion and it is logging.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "3.1"
+     ],
+     "CIS-1.4": [
+      "3.1"
+     ],
+     "CIS-6.0": [
+      "4.1"
+     ],
+     "CIS-2.0": [
+      "3.1"
+     ],
+     "CIS-1.5": [
+      "3.1"
+     ],
+     "CIS-3.0": [
+      "3.1"
+     ],
+     "CIS-7.0": [
+      "4.1"
+     ],
+     "CIS-5.0": [
+      "3.1"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "cloudtrail",
+     "name": "Region has at least one CloudTrail trail logging",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "cloudtrail_multi_region_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "Region has at least one CloudTrail trail logging",
+    "uid": "prowler-aws-cloudtrail_multi_region_enabled-123456789012-ap-south-1-acme-trail"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-trail",
+     "type": "AwsCloudTrailTrail",
+     "uid": "arn:aws:cloudtrail:ap-south-1:123456789012:trail/acme-trail"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Log Group /acme/worker comply with 365 days retention period since it has 365 days.",
+   "metadata": {
+    "event_code": "cloudwatch_log_group_retention_policy_specific_days_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "Log Group /acme/worker comply with 365 days retention period since it has 365 days.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "cloudwatch",
+     "name": "CloudWatch log group has a retention policy of at least the configured minimum days or never expires",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "cloudwatch_log_group_retention_policy_specific_days_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "CloudWatch log group has a retention policy of at least the configured minimum days or never expires",
+    "uid": "prowler-aws-cloudwatch_log_group_retention_policy_specific_days_enabled-123456789012-ap-south-1-/acme/worker"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "/acme/worker",
+     "type": "AwsLogsLogGroup",
+     "uid": "arn:aws:logs:ap-south-1:123456789012:log-group:/acme/worker:*"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Log Group /acme/api has less than 365 days retention period (7 days).",
+   "metadata": {
+    "event_code": "cloudwatch_log_group_retention_policy_specific_days_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "Log Group /acme/api has less than 365 days retention period (7 days).",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "cloudwatch",
+     "name": "CloudWatch log group has a retention policy of at least the configured minimum days or never expires",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "cloudwatch_log_group_retention_policy_specific_days_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "CloudWatch log group has a retention policy of at least the configured minimum days or never expires",
+    "uid": "prowler-aws-cloudwatch_log_group_retention_policy_specific_days_enabled-123456789012-ap-south-1-/acme/api"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "/acme/api",
+     "type": "AwsLogsLogGroup",
+     "uid": "arn:aws:logs:ap-south-1:123456789012:log-group:/acme/api:*"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "AWS Config recorder 123456789012 is disabled.",
+   "metadata": {
+    "event_code": "config_recorder_all_regions_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "AWS Config recorder 123456789012 is disabled.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "3.3"
+     ],
+     "CIS-1.4": [
+      "3.5"
+     ],
+     "CIS-6.0": [
+      "4.3"
+     ],
+     "CIS-2.0": [
+      "3.5"
+     ],
+     "CIS-1.5": [
+      "3.5"
+     ],
+     "CIS-3.0": [
+      "3.3"
+     ],
+     "CIS-7.0": [
+      "4.3"
+     ],
+     "CIS-5.0": [
+      "3.3"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "config",
+     "name": "AWS Config recorder is enabled and not in failure state or disabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "config_recorder_all_regions_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Exploit Public-Facing Application",
+       "src_url": "https://attack.mitre.org/techniques/T1190/",
+       "uid": "T1190"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Execution"
+      },
+      "technique": {
+       "name": "User Execution",
+       "src_url": "https://attack.mitre.org/techniques/T1204/",
+       "uid": "T1204"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Account Manipulation",
+       "src_url": "https://attack.mitre.org/techniques/T1098/",
+       "uid": "T1098"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Create Account",
+       "src_url": "https://attack.mitre.org/techniques/T1136/",
+       "uid": "T1136"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Implant Internal Image",
+       "src_url": "https://attack.mitre.org/techniques/T1525/",
+       "uid": "T1525"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Impair Defenses",
+       "src_url": "https://attack.mitre.org/techniques/T1562/",
+       "uid": "T1562"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Automated Collection",
+       "src_url": "https://attack.mitre.org/techniques/T1119/",
+       "uid": "T1119"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Destruction",
+       "src_url": "https://attack.mitre.org/techniques/T1485/",
+       "uid": "T1485"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Encrypted for Impact",
+       "src_url": "https://attack.mitre.org/techniques/T1486/",
+       "uid": "T1486"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Defacement",
+       "src_url": "https://attack.mitre.org/techniques/T1491/",
+       "uid": "T1491"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Endpoint Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1499/",
+       "uid": "T1499"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Resource Hijacking",
+       "src_url": "https://attack.mitre.org/techniques/T1496/",
+       "uid": "T1496"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Network Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1498/",
+       "uid": "T1498"
+      }
+     }
+    ],
+    "title": "AWS Config recorder is enabled and not in failure state or disabled",
+    "uid": "prowler-aws-config_recorder_all_regions_enabled-123456789012-ap-south-1-123456789012"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "123456789012",
+     "type": "Other",
+     "uid": "arn:aws:config:ap-south-1:123456789012:recorder"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "EBS Default Encryption is not activated.",
+   "metadata": {
+    "event_code": "ec2_ebs_default_encryption",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "EBS Default Encryption is not activated.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-7.0": [
+      "6.1.1"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "EBS default encryption is enabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_ebs_default_encryption"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Automated Collection",
+       "src_url": "https://attack.mitre.org/techniques/T1119/",
+       "uid": "T1119"
+      }
+     }
+    ],
+    "title": "EBS default encryption is enabled",
+    "uid": "prowler-aws-ec2_ebs_default_encryption-123456789012-ap-south-1-123456789012"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "123456789012",
+     "type": "AwsEc2Volume",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:volume"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "EBS Snapshot snap-93f02b64718910385 is not Public.",
+   "metadata": {
+    "event_code": "ec2_ebs_public_snapshot",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "EBS Snapshot snap-93f02b64718910385 is not Public.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "EBS snapshot is not public",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_ebs_public_snapshot"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "EBS snapshot is not public",
+    "uid": "prowler-aws-ec2_ebs_public_snapshot-123456789012-ap-south-1-snap-93f02b64718910385"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "snap-93f02b64718910385",
+     "type": "AwsEc2Volume",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:snapshot/snap-93f02b64718910385"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "EBS Snapshot snap-5f0b97f7a2f65223b is not Public.",
+   "metadata": {
+    "event_code": "ec2_ebs_public_snapshot",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "EBS Snapshot snap-5f0b97f7a2f65223b is not Public.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "EBS snapshot is not public",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_ebs_public_snapshot"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "EBS snapshot is not public",
+    "uid": "prowler-aws-ec2_ebs_public_snapshot-123456789012-ap-south-1-snap-5f0b97f7a2f65223b"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "snap-5f0b97f7a2f65223b",
+     "type": "AwsEc2Volume",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:snapshot/snap-5f0b97f7a2f65223b"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "EBS Snapshot snap-59b8d86c1f6c442ce is not Public.",
+   "metadata": {
+    "event_code": "ec2_ebs_public_snapshot",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "EBS Snapshot snap-59b8d86c1f6c442ce is not Public.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "EBS snapshot is not public",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_ebs_public_snapshot"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "EBS snapshot is not public",
+    "uid": "prowler-aws-ec2_ebs_public_snapshot-123456789012-ap-south-1-snap-59b8d86c1f6c442ce"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "snap-59b8d86c1f6c442ce",
+     "type": "AwsEc2Volume",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:snapshot/snap-59b8d86c1f6c442ce"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "EC2 Instance i-2d70a6f89d6a8d1bd has IMDSv2 disabled or not required.",
+   "metadata": {
+    "event_code": "ec2_instance_imdsv2_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "EC2 Instance i-2d70a6f89d6a8d1bd has IMDSv2 disabled or not required.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "5.7"
+     ],
+     "CIS-6.0": [
+      "6.7"
+     ],
+     "CIS-2.0": [
+      "5.6"
+     ],
+     "CIS-3.0": [
+      "5.6"
+     ],
+     "CIS-7.0": [
+      "6.7"
+     ],
+     "CIS-5.0": [
+      "5.7"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "EC2 instance requires IMDSv2 or has the instance metadata service disabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_instance_imdsv2_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Unsecured Credentials",
+       "src_url": "https://attack.mitre.org/techniques/T1552/",
+       "uid": "T1552"
+      }
+     }
+    ],
+    "title": "EC2 instance requires IMDSv2 or has the instance metadata service disabled",
+    "uid": "prowler-aws-ec2_instance_imdsv2_enabled-123456789012-ap-south-1-i-2d70a6f89d6a8d1bd"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "i-2d70a6f89d6a8d1bd",
+     "type": "AwsEc2Instance",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:instance/i-2d70a6f89d6a8d1bd"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "EC2 Instance i-2d70a6f89d6a8d1bd has a Public IP: 54.214.72.161 (ec2-54-214-72-161.ap-south-1.compute.amazonaws.com).",
+   "metadata": {
+    "event_code": "ec2_instance_public_ip",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "EC2 Instance i-2d70a6f89d6a8d1bd has a Public IP: 54.214.72.161 (ec2-54-214-72-161.ap-south-1.compute.amazonaws.com).",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "EC2 instance does not have a public IP address",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_instance_public_ip"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Exploit Public-Facing Application",
+       "src_url": "https://attack.mitre.org/techniques/T1190/",
+       "uid": "T1190"
+      }
+     }
+    ],
+    "title": "EC2 instance does not have a public IP address",
+    "uid": "prowler-aws-ec2_instance_public_ip-123456789012-ap-south-1-i-2d70a6f89d6a8d1bd"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "i-2d70a6f89d6a8d1bd",
+     "type": "AwsEc2Instance",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:instance/i-2d70a6f89d6a8d1bd"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "No secrets found in EC2 instance i-2d70a6f89d6a8d1bd since User Data is empty.",
+   "metadata": {
+    "event_code": "ec2_instance_secrets_user_data",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "No secrets found in EC2 instance i-2d70a6f89d6a8d1bd since User Data is empty.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "EC2 instance user data contains no secrets",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_instance_secrets_user_data"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Unsecured Credentials",
+       "src_url": "https://attack.mitre.org/techniques/T1552/",
+       "uid": "T1552"
+      }
+     }
+    ],
+    "title": "EC2 instance user data contains no secrets",
+    "uid": "prowler-aws-ec2_instance_secrets_user_data-123456789012-ap-south-1-i-2d70a6f89d6a8d1bd"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "i-2d70a6f89d6a8d1bd",
+     "type": "AwsEc2Instance",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:instance/i-2d70a6f89d6a8d1bd"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Security group api (sg-1c5d8088dba90bc1a) does not have all ports open to the Internet.",
+   "metadata": {
+    "event_code": "ec2_securitygroup_allow_ingress_from_internet_to_all_ports",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "Security group api (sg-1c5d8088dba90bc1a) does not have all ports open to the Internet.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "5.3",
+      "5.4"
+     ],
+     "CIS-1.4": [
+      "5.2"
+     ],
+     "CIS-6.0": [
+      "6.3",
+      "6.4"
+     ],
+     "CIS-2.0": [
+      "5.2",
+      "5.3"
+     ],
+     "CIS-1.5": [
+      "5.2",
+      "5.3"
+     ],
+     "CIS-3.0": [
+      "5.2",
+      "5.3"
+     ],
+     "CIS-7.0": [
+      "6.3",
+      "6.4"
+     ],
+     "CIS-5.0": [
+      "5.3",
+      "5.4"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "Security group does not have all ports open to the Internet",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_securitygroup_allow_ingress_from_internet_to_all_ports"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Trusted Relationship",
+       "src_url": "https://attack.mitre.org/techniques/T1199/",
+       "uid": "T1199"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Exfiltration"
+      },
+      "technique": {
+       "name": "Exfiltration Over Alternative Protocol",
+       "src_url": "https://attack.mitre.org/techniques/T1048/",
+       "uid": "T1048"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Endpoint Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1499/",
+       "uid": "T1499"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Network Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1498/",
+       "uid": "T1498"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Service Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1046/",
+       "uid": "T1046"
+      }
+     }
+    ],
+    "title": "Security group does not have all ports open to the Internet",
+    "uid": "prowler-aws-ec2_securitygroup_allow_ingress_from_internet_to_all_ports-123456789012-ap-south-1-sg-1c5d8088dba90bc1a"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "sg-1c5d8088dba90bc1a",
+     "type": "AwsEc2SecurityGroup",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:security-group/sg-1c5d8088dba90bc1a"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Security group api (sg-1c5d8088dba90bc1a) has SSH port 22 open to the Internet.",
+   "metadata": {
+    "event_code": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_22",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "Security group api (sg-1c5d8088dba90bc1a) has SSH port 22 open to the Internet.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "5.3",
+      "5.4"
+     ],
+     "CIS-1.4": [
+      "5.2"
+     ],
+     "CIS-6.0": [
+      "6.3",
+      "6.4"
+     ],
+     "CIS-2.0": [
+      "5.2",
+      "5.3"
+     ],
+     "CIS-1.5": [
+      "5.2",
+      "5.3"
+     ],
+     "CIS-3.0": [
+      "5.2",
+      "5.3"
+     ],
+     "CIS-7.0": [
+      "6.3",
+      "6.4"
+     ],
+     "CIS-5.0": [
+      "5.3",
+      "5.4"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "Security group does not allow ingress from 0.0.0.0/0 or ::/0 to TCP port 22 (SSH)",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_22"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Trusted Relationship",
+       "src_url": "https://attack.mitre.org/techniques/T1199/",
+       "uid": "T1199"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Exfiltration"
+      },
+      "technique": {
+       "name": "Exfiltration Over Alternative Protocol",
+       "src_url": "https://attack.mitre.org/techniques/T1048/",
+       "uid": "T1048"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Endpoint Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1499/",
+       "uid": "T1499"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Network Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1498/",
+       "uid": "T1498"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Service Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1046/",
+       "uid": "T1046"
+      }
+     }
+    ],
+    "title": "Security group does not allow ingress from 0.0.0.0/0 or ::/0 to TCP port 22 (SSH)",
+    "uid": "prowler-aws-ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_22-123456789012-ap-south-1-sg-1c5d8088dba90bc1a"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "sg-1c5d8088dba90bc1a",
+     "type": "AwsEc2SecurityGroup",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:security-group/sg-1c5d8088dba90bc1a"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Security group api (sg-1c5d8088dba90bc1a) does not have Microsoft RDP port 3389 open to the Internet.",
+   "metadata": {
+    "event_code": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_3389",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "Security group api (sg-1c5d8088dba90bc1a) does not have Microsoft RDP port 3389 open to the Internet.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "5.3",
+      "5.4"
+     ],
+     "CIS-1.4": [
+      "5.2"
+     ],
+     "CIS-6.0": [
+      "6.3",
+      "6.4"
+     ],
+     "CIS-2.0": [
+      "5.2",
+      "5.3"
+     ],
+     "CIS-1.5": [
+      "5.2",
+      "5.3"
+     ],
+     "CIS-3.0": [
+      "5.2",
+      "5.3"
+     ],
+     "CIS-7.0": [
+      "6.3",
+      "6.4"
+     ],
+     "CIS-5.0": [
+      "5.3",
+      "5.4"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "Security group does not allow ingress from the Internet to TCP port 3389 (RDP)",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_3389"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Trusted Relationship",
+       "src_url": "https://attack.mitre.org/techniques/T1199/",
+       "uid": "T1199"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Exfiltration"
+      },
+      "technique": {
+       "name": "Exfiltration Over Alternative Protocol",
+       "src_url": "https://attack.mitre.org/techniques/T1048/",
+       "uid": "T1048"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Endpoint Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1499/",
+       "uid": "T1499"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Network Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1498/",
+       "uid": "T1498"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Service Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1046/",
+       "uid": "T1046"
+      }
+     }
+    ],
+    "title": "Security group does not allow ingress from the Internet to TCP port 3389 (RDP)",
+    "uid": "prowler-aws-ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_3389-123456789012-ap-south-1-sg-1c5d8088dba90bc1a"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "sg-1c5d8088dba90bc1a",
+     "type": "AwsEc2SecurityGroup",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:security-group/sg-1c5d8088dba90bc1a"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Security group api (sg-1c5d8088dba90bc1a) does not have MySQL port 3306 open to the Internet.",
+   "metadata": {
+    "event_code": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_mysql_3306",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "Security group api (sg-1c5d8088dba90bc1a) does not have MySQL port 3306 open to the Internet.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "Security group does not allow ingress from 0.0.0.0/0 or ::/0 to MySQL port 3306",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_mysql_3306"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Trusted Relationship",
+       "src_url": "https://attack.mitre.org/techniques/T1199/",
+       "uid": "T1199"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Exfiltration"
+      },
+      "technique": {
+       "name": "Exfiltration Over Alternative Protocol",
+       "src_url": "https://attack.mitre.org/techniques/T1048/",
+       "uid": "T1048"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Endpoint Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1499/",
+       "uid": "T1499"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Network Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1498/",
+       "uid": "T1498"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Service Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1046/",
+       "uid": "T1046"
+      }
+     }
+    ],
+    "title": "Security group does not allow ingress from 0.0.0.0/0 or ::/0 to MySQL port 3306",
+    "uid": "prowler-aws-ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_mysql_3306-123456789012-ap-south-1-sg-1c5d8088dba90bc1a"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "sg-1c5d8088dba90bc1a",
+     "type": "AwsEc2SecurityGroup",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:security-group/sg-1c5d8088dba90bc1a"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Security group api (sg-1c5d8088dba90bc1a) does not have Postgres port 5432 open to the Internet.",
+   "metadata": {
+    "event_code": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_postgres_5432",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "Security group api (sg-1c5d8088dba90bc1a) does not have Postgres port 5432 open to the Internet.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ec2",
+     "name": "Security group does not allow ingress from 0.0.0.0/0 or ::/0 to Postgres TCP port 5432",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_postgres_5432"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Trusted Relationship",
+       "src_url": "https://attack.mitre.org/techniques/T1199/",
+       "uid": "T1199"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Exfiltration"
+      },
+      "technique": {
+       "name": "Exfiltration Over Alternative Protocol",
+       "src_url": "https://attack.mitre.org/techniques/T1048/",
+       "uid": "T1048"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Endpoint Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1499/",
+       "uid": "T1499"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Network Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1498/",
+       "uid": "T1498"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Service Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1046/",
+       "uid": "T1046"
+      }
+     }
+    ],
+    "title": "Security group does not allow ingress from 0.0.0.0/0 or ::/0 to Postgres TCP port 5432",
+    "uid": "prowler-aws-ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_postgres_5432-123456789012-ap-south-1-sg-1c5d8088dba90bc1a"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "sg-1c5d8088dba90bc1a",
+     "type": "AwsEc2SecurityGroup",
+     "uid": "arn:aws:ec2:ap-south-1:123456789012:security-group/sg-1c5d8088dba90bc1a"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "ECR registry 123456789012 has BASIC scanning without automated scanning enabled.",
+   "metadata": {
+    "event_code": "ecr_registry_scan_images_on_push_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "ECR registry 123456789012 has BASIC scanning without automated scanning enabled.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ecr",
+     "name": "ECR registry has automated image scanning enabled for all repositories",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ecr_registry_scan_images_on_push_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "ECR registry has automated image scanning enabled for all repositories",
+    "uid": "prowler-aws-ecr_registry_scan_images_on_push_enabled-123456789012-ap-south-1-123456789012"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "123456789012",
+     "type": "Other",
+     "uid": "arn:aws:ecr:ap-south-1:123456789012:registry/123456789012"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "ECR repository acme/api has scan on push disabled.",
+   "metadata": {
+    "event_code": "ecr_repositories_scan_images_on_push_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "ECR repository acme/api has scan on push disabled.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ecr",
+     "name": "[DEPRECATED] ECR repository has image scanning on push enabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ecr_repositories_scan_images_on_push_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "[DEPRECATED] ECR repository has image scanning on push enabled",
+    "uid": "prowler-aws-ecr_repositories_scan_images_on_push_enabled-123456789012-ap-south-1-acme/api"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme/api",
+     "type": "AwsEcrRepository",
+     "uid": "arn:aws:ecr:ap-south-1:123456789012:repository/acme/api"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "Repository acme/api does not have immutability configured.",
+   "metadata": {
+    "event_code": "ecr_repositories_tag_immutability",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "Repository acme/api does not have immutability configured.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "ecr",
+     "name": "ECR repository has image tag immutability enabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "ecr_repositories_tag_immutability"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "ECR repository has image tag immutability enabled",
+    "uid": "prowler-aws-ecr_repositories_tag_immutability-123456789012-ap-south-1-acme/api"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme/api",
+     "type": "AwsEcrRepository",
+     "uid": "arn:aws:ecr:ap-south-1:123456789012:repository/acme/api"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "GuardDuty is not enabled.",
+   "metadata": {
+    "event_code": "guardduty_is_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "GuardDuty is not enabled.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "guardduty",
+     "name": "GuardDuty detector is enabled and not suspended",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "guardduty_is_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Exploit Public-Facing Application",
+       "src_url": "https://attack.mitre.org/techniques/T1190/",
+       "uid": "T1190"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Account Manipulation",
+       "src_url": "https://attack.mitre.org/techniques/T1098/",
+       "uid": "T1098"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Impair Defenses",
+       "src_url": "https://attack.mitre.org/techniques/T1562/",
+       "uid": "T1562"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Unsecured Credentials",
+       "src_url": "https://attack.mitre.org/techniques/T1552/",
+       "uid": "T1552"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Exfiltration"
+      },
+      "technique": {
+       "name": "Exfiltration Over Alternative Protocol",
+       "src_url": "https://attack.mitre.org/techniques/T1048/",
+       "uid": "T1048"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Resource Hijacking",
+       "src_url": "https://attack.mitre.org/techniques/T1496/",
+       "uid": "T1496"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Network Denial of Service",
+       "src_url": "https://attack.mitre.org/techniques/T1498/",
+       "uid": "T1498"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Infrastructure Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1580/",
+       "uid": "T1580"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Service Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1526/",
+       "uid": "T1526"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Service Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1046/",
+       "uid": "T1046"
+      }
+     }
+    ],
+    "title": "GuardDuty detector is enabled and not suspended",
+    "uid": "prowler-aws-guardduty_is_enabled-123456789012-ap-south-1-detector/unknown"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "detector/unknown",
+     "type": "AwsGuardDutyDetector",
+     "uid": "arn:aws:guardduty:ap-south-1:123456789012:detector/unknown"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "AWS policy AdministratorAccess is attached and allows '*:*' administrative privileges.",
+   "metadata": {
+    "event_code": "iam_aws_attached_policy_no_administrative_privileges",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "AWS policy AdministratorAccess is attached and allows '*:*' administrative privileges.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.16"
+     ],
+     "CIS-1.4": [
+      "1.16"
+     ],
+     "CIS-6.0": [
+      "2.15"
+     ],
+     "CIS-2.0": [
+      "1.16"
+     ],
+     "CIS-1.5": [
+      "1.16"
+     ],
+     "CIS-3.0": [
+      "1.16"
+     ],
+     "CIS-7.0": [
+      "2.14"
+     ],
+     "CIS-5.0": [
+      "1.15"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "Attached AWS-managed IAM policy does not allow '*:*' administrative privileges",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_aws_attached_policy_no_administrative_privileges"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Execution"
+      },
+      "technique": {
+       "name": "Serverless Execution",
+       "src_url": "https://attack.mitre.org/techniques/T1648/",
+       "uid": "T1648"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Account Manipulation",
+       "src_url": "https://attack.mitre.org/techniques/T1098/",
+       "uid": "T1098"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Modify Cloud Compute Infrastructure",
+       "src_url": "https://attack.mitre.org/techniques/T1578/",
+       "uid": "T1578"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Infrastructure Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1580/",
+       "uid": "T1580"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Service Dashboard",
+       "src_url": "https://attack.mitre.org/techniques/T1538/",
+       "uid": "T1538"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Storage Object Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1619/",
+       "uid": "T1619"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Password Policy Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1201/",
+       "uid": "T1201"
+      }
+     }
+    ],
+    "title": "Attached AWS-managed IAM policy does not allow '*:*' administrative privileges",
+    "uid": "prowler-aws-iam_aws_attached_policy_no_administrative_privileges-123456789012-ap-south-1-AdministratorAccess"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "AdministratorAccess",
+     "type": "AwsIamPolicy",
+     "uid": "arn:aws:iam::aws:policy/AdministratorAccess"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "AWS policy PowerUserAccess is attached but does not allow '*:*' administrative privileges.",
+   "metadata": {
+    "event_code": "iam_aws_attached_policy_no_administrative_privileges",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "AWS policy PowerUserAccess is attached but does not allow '*:*' administrative privileges.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.16"
+     ],
+     "CIS-1.4": [
+      "1.16"
+     ],
+     "CIS-6.0": [
+      "2.15"
+     ],
+     "CIS-2.0": [
+      "1.16"
+     ],
+     "CIS-1.5": [
+      "1.16"
+     ],
+     "CIS-3.0": [
+      "1.16"
+     ],
+     "CIS-7.0": [
+      "2.14"
+     ],
+     "CIS-5.0": [
+      "1.15"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "Attached AWS-managed IAM policy does not allow '*:*' administrative privileges",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_aws_attached_policy_no_administrative_privileges"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Execution"
+      },
+      "technique": {
+       "name": "Serverless Execution",
+       "src_url": "https://attack.mitre.org/techniques/T1648/",
+       "uid": "T1648"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Account Manipulation",
+       "src_url": "https://attack.mitre.org/techniques/T1098/",
+       "uid": "T1098"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Modify Cloud Compute Infrastructure",
+       "src_url": "https://attack.mitre.org/techniques/T1578/",
+       "uid": "T1578"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Infrastructure Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1580/",
+       "uid": "T1580"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Service Dashboard",
+       "src_url": "https://attack.mitre.org/techniques/T1538/",
+       "uid": "T1538"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Storage Object Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1619/",
+       "uid": "T1619"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Password Policy Discovery",
+       "src_url": "https://attack.mitre.org/techniques/T1201/",
+       "uid": "T1201"
+      }
+     }
+    ],
+    "title": "Attached AWS-managed IAM policy does not allow '*:*' administrative privileges",
+    "uid": "prowler-aws-iam_aws_attached_policy_no_administrative_privileges-123456789012-ap-south-1-PowerUserAccess"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "PowerUserAccess",
+     "type": "AwsIamPolicy",
+     "uid": "arn:aws:iam::aws:policy/PowerUserAccess"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "IAM password policy requires minimum length of 14 characters.",
+   "metadata": {
+    "event_code": "iam_password_policy_minimum_length_14",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "IAM password policy requires minimum length of 14 characters.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.8"
+     ],
+     "CIS-1.4": [
+      "1.8"
+     ],
+     "CIS-6.0": [
+      "2.7"
+     ],
+     "CIS-2.0": [
+      "1.8"
+     ],
+     "CIS-1.5": [
+      "1.8"
+     ],
+     "CIS-3.0": [
+      "1.8"
+     ],
+     "CIS-7.0": [
+      "2.8"
+     ],
+     "CIS-5.0": [
+      "1.7"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM password policy requires passwords to be at least 14 characters long",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_password_policy_minimum_length_14"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     }
+    ],
+    "title": "IAM password policy requires passwords to be at least 14 characters long",
+    "uid": "prowler-aws-iam_password_policy_minimum_length_14-123456789012-ap-south-1-123456789012"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "123456789012",
+     "type": "AwsIamPolicy",
+     "uid": "arn:aws:iam:ap-south-1:123456789012:password-policy"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "IAM password policy reuse prevention is equal to 24.",
+   "metadata": {
+    "event_code": "iam_password_policy_reuse_24",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "IAM password policy reuse prevention is equal to 24.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.9"
+     ],
+     "CIS-1.4": [
+      "1.9"
+     ],
+     "CIS-6.0": [
+      "2.8"
+     ],
+     "CIS-2.0": [
+      "1.9"
+     ],
+     "CIS-1.5": [
+      "1.9"
+     ],
+     "CIS-3.0": [
+      "1.9"
+     ],
+     "CIS-7.0": [
+      "2.9"
+     ],
+     "CIS-5.0": [
+      "1.8"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM password policy prevents reuse of the last 24 passwords",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_password_policy_reuse_24"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     }
+    ],
+    "title": "IAM password policy prevents reuse of the last 24 passwords",
+    "uid": "prowler-aws-iam_password_policy_reuse_24-123456789012-ap-south-1-123456789012"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "123456789012",
+     "type": "AwsIamPolicy",
+     "uid": "arn:aws:iam:ap-south-1:123456789012:password-policy"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User priya.sharma has no inline or attached policies.",
+   "metadata": {
+    "event_code": "iam_policy_attached_only_to_group_or_roles",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 2,
+   "severity": "Low",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "User priya.sharma has no inline or attached policies.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.15"
+     ],
+     "CIS-1.4": [
+      "1.15"
+     ],
+     "CIS-6.0": [
+      "2.14"
+     ],
+     "CIS-2.0": [
+      "1.15"
+     ],
+     "CIS-1.5": [
+      "1.15"
+     ],
+     "CIS-3.0": [
+      "1.15"
+     ],
+     "CIS-7.0": [
+      "2.13"
+     ],
+     "CIS-5.0": [
+      "1.14"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user has no inline or attached policies",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_policy_attached_only_to_group_or_roles"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "IAM user has no inline or attached policies",
+    "uid": "prowler-aws-iam_policy_attached_only_to_group_or_roles-123456789012-ap-south-1-priya.sharma"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "priya.sharma",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/priya.sharma"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User ci-deploy has the policy AdministratorAccess attached.",
+   "metadata": {
+    "event_code": "iam_policy_attached_only_to_group_or_roles",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 2,
+   "severity": "Low",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "User ci-deploy has the policy AdministratorAccess attached.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.15"
+     ],
+     "CIS-1.4": [
+      "1.15"
+     ],
+     "CIS-6.0": [
+      "2.14"
+     ],
+     "CIS-2.0": [
+      "1.15"
+     ],
+     "CIS-1.5": [
+      "1.15"
+     ],
+     "CIS-3.0": [
+      "1.15"
+     ],
+     "CIS-7.0": [
+      "2.13"
+     ],
+     "CIS-5.0": [
+      "1.14"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user has no inline or attached policies",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_policy_attached_only_to_group_or_roles"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "IAM user has no inline or attached policies",
+    "uid": "prowler-aws-iam_policy_attached_only_to_group_or_roles-123456789012-ap-south-1-ci-deploy/AdministratorAccess"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "ci-deploy/AdministratorAccess",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/ci-deploy"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User priya.sharma does not have access keys.",
+   "metadata": {
+    "event_code": "iam_rotate_access_key_90_days",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "User priya.sharma does not have access keys.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.14"
+     ],
+     "CIS-1.4": [
+      "1.14"
+     ],
+     "CIS-6.0": [
+      "2.13"
+     ],
+     "CIS-2.0": [
+      "1.14"
+     ],
+     "CIS-1.5": [
+      "1.14"
+     ],
+     "CIS-3.0": [
+      "1.14"
+     ],
+     "CIS-7.0": [
+      "2.12"
+     ],
+     "CIS-5.0": [
+      "1.13"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user does not have active access keys older than 90 days",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_rotate_access_key_90_days"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     }
+    ],
+    "title": "IAM user does not have active access keys older than 90 days",
+    "uid": "prowler-aws-iam_rotate_access_key_90_days-123456789012-ap-south-1-priya.sharma"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "priya.sharma",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/priya.sharma"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User ci-deploy does not have access keys older than 90 days.",
+   "metadata": {
+    "event_code": "iam_rotate_access_key_90_days",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "User ci-deploy does not have access keys older than 90 days.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.14"
+     ],
+     "CIS-1.4": [
+      "1.14"
+     ],
+     "CIS-6.0": [
+      "2.13"
+     ],
+     "CIS-2.0": [
+      "1.14"
+     ],
+     "CIS-1.5": [
+      "1.14"
+     ],
+     "CIS-3.0": [
+      "1.14"
+     ],
+     "CIS-7.0": [
+      "2.12"
+     ],
+     "CIS-5.0": [
+      "1.13"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user does not have active access keys older than 90 days",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_rotate_access_key_90_days"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     }
+    ],
+    "title": "IAM user does not have active access keys older than 90 days",
+    "uid": "prowler-aws-iam_rotate_access_key_90_days-123456789012-ap-south-1-ci-deploy"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "ci-deploy",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/ci-deploy"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User priya.sharma does not have access keys.",
+   "metadata": {
+    "event_code": "iam_user_accesskey_unused",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "User priya.sharma does not have access keys.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.12"
+     ],
+     "CIS-1.4": [
+      "1.12"
+     ],
+     "CIS-6.0": [
+      "2.11"
+     ],
+     "CIS-2.0": [
+      "1.12"
+     ],
+     "CIS-1.5": [
+      "1.12"
+     ],
+     "CIS-3.0": [
+      "1.12"
+     ],
+     "CIS-7.0": [
+      "2.11"
+     ],
+     "CIS-5.0": [
+      "1.11"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user does not have unused access keys older than 45 days",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_user_accesskey_unused"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     }
+    ],
+    "title": "IAM user does not have unused access keys older than 45 days",
+    "uid": "prowler-aws-iam_user_accesskey_unused-123456789012-ap-south-1-priya.sharma"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "priya.sharma",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/priya.sharma"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User ci-deploy does not have unused access keys for 45 days.",
+   "metadata": {
+    "event_code": "iam_user_accesskey_unused",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "User ci-deploy does not have unused access keys for 45 days.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.12"
+     ],
+     "CIS-1.4": [
+      "1.12"
+     ],
+     "CIS-6.0": [
+      "2.11"
+     ],
+     "CIS-2.0": [
+      "1.12"
+     ],
+     "CIS-1.5": [
+      "1.12"
+     ],
+     "CIS-3.0": [
+      "1.12"
+     ],
+     "CIS-7.0": [
+      "2.11"
+     ],
+     "CIS-5.0": [
+      "1.11"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user does not have unused access keys older than 45 days",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_user_accesskey_unused"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     }
+    ],
+    "title": "IAM user does not have unused access keys older than 45 days",
+    "uid": "prowler-aws-iam_user_accesskey_unused-123456789012-ap-south-1-ci-deploy"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "ci-deploy",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/ci-deploy"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User priya.sharma does not have console access enabled or is unused.",
+   "metadata": {
+    "event_code": "iam_user_console_access_unused",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "User priya.sharma does not have console access enabled or is unused.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.12"
+     ],
+     "CIS-1.4": [
+      "1.12"
+     ],
+     "CIS-6.0": [
+      "2.11"
+     ],
+     "CIS-2.0": [
+      "1.12"
+     ],
+     "CIS-1.5": [
+      "1.12"
+     ],
+     "CIS-3.0": [
+      "1.12"
+     ],
+     "CIS-7.0": [
+      "2.11"
+     ],
+     "CIS-5.0": [
+      "1.11"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user console access is disabled, used within the configured inactivity period, or never used",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_user_console_access_unused"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     }
+    ],
+    "title": "IAM user console access is disabled, used within the configured inactivity period, or never used",
+    "uid": "prowler-aws-iam_user_console_access_unused-123456789012-ap-south-1-priya.sharma"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "priya.sharma",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/priya.sharma"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User ci-deploy does not have console access enabled or is unused.",
+   "metadata": {
+    "event_code": "iam_user_console_access_unused",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "User ci-deploy does not have console access enabled or is unused.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.12"
+     ],
+     "CIS-1.4": [
+      "1.12"
+     ],
+     "CIS-6.0": [
+      "2.11"
+     ],
+     "CIS-2.0": [
+      "1.12"
+     ],
+     "CIS-1.5": [
+      "1.12"
+     ],
+     "CIS-3.0": [
+      "1.12"
+     ],
+     "CIS-7.0": [
+      "2.11"
+     ],
+     "CIS-5.0": [
+      "1.11"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user console access is disabled, used within the configured inactivity period, or never used",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_user_console_access_unused"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     }
+    ],
+    "title": "IAM user console access is disabled, used within the configured inactivity period, or never used",
+    "uid": "prowler-aws-iam_user_console_access_unused-123456789012-ap-south-1-ci-deploy"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "ci-deploy",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/ci-deploy"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User priya.sharma has Console Password enabled but MFA disabled.",
+   "metadata": {
+    "event_code": "iam_user_mfa_enabled_console_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "User priya.sharma has Console Password enabled but MFA disabled.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.10"
+     ],
+     "CIS-1.4": [
+      "1.10"
+     ],
+     "CIS-6.0": [
+      "2.9"
+     ],
+     "CIS-2.0": [
+      "1.10"
+     ],
+     "CIS-1.5": [
+      "1.10"
+     ],
+     "CIS-3.0": [
+      "1.10"
+     ],
+     "CIS-7.0": [
+      "2.10"
+     ],
+     "CIS-5.0": [
+      "1.9"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user has MFA enabled for console access or no console password is set",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_user_mfa_enabled_console_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Account Manipulation",
+       "src_url": "https://attack.mitre.org/techniques/T1098/",
+       "uid": "T1098"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Modify Authentication Process",
+       "src_url": "https://attack.mitre.org/techniques/T1556/",
+       "uid": "T1556"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Modify Authentication Process",
+       "src_url": "https://attack.mitre.org/techniques/T1556/",
+       "uid": "T1556"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Modify Authentication Process",
+       "src_url": "https://attack.mitre.org/techniques/T1556/",
+       "uid": "T1556"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Service Dashboard",
+       "src_url": "https://attack.mitre.org/techniques/T1538/",
+       "uid": "T1538"
+      }
+     }
+    ],
+    "title": "IAM user has MFA enabled for console access or no console password is set",
+    "uid": "prowler-aws-iam_user_mfa_enabled_console_access-123456789012-ap-south-1-priya.sharma"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "priya.sharma",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/priya.sharma"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "User ci-deploy does not have Console Password enabled.",
+   "metadata": {
+    "event_code": "iam_user_mfa_enabled_console_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "User ci-deploy does not have Console Password enabled.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "1.10"
+     ],
+     "CIS-1.4": [
+      "1.10"
+     ],
+     "CIS-6.0": [
+      "2.9"
+     ],
+     "CIS-2.0": [
+      "1.10"
+     ],
+     "CIS-1.5": [
+      "1.10"
+     ],
+     "CIS-3.0": [
+      "1.10"
+     ],
+     "CIS-7.0": [
+      "2.10"
+     ],
+     "CIS-5.0": [
+      "1.9"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "iam",
+     "name": "IAM user has MFA enabled for console access or no console password is set",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "iam_user_mfa_enabled_console_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Privilege Escalation"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Valid Accounts",
+       "src_url": "https://attack.mitre.org/techniques/T1078/",
+       "uid": "T1078"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Account Manipulation",
+       "src_url": "https://attack.mitre.org/techniques/T1098/",
+       "uid": "T1098"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Modify Authentication Process",
+       "src_url": "https://attack.mitre.org/techniques/T1556/",
+       "uid": "T1556"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Modify Authentication Process",
+       "src_url": "https://attack.mitre.org/techniques/T1556/",
+       "uid": "T1556"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Persistence"
+      },
+      "technique": {
+       "name": "Modify Authentication Process",
+       "src_url": "https://attack.mitre.org/techniques/T1556/",
+       "uid": "T1556"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Defense Evasion"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Lateral Movement"
+      },
+      "technique": {
+       "name": "Use Alternate Authentication Material",
+       "src_url": "https://attack.mitre.org/techniques/T1550/",
+       "uid": "T1550"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Brute Force",
+       "src_url": "https://attack.mitre.org/techniques/T1110/",
+       "uid": "T1110"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Network Sniffing",
+       "src_url": "https://attack.mitre.org/techniques/T1040/",
+       "uid": "T1040"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Discovery"
+      },
+      "technique": {
+       "name": "Cloud Service Dashboard",
+       "src_url": "https://attack.mitre.org/techniques/T1538/",
+       "uid": "T1538"
+      }
+     }
+    ],
+    "title": "IAM user has MFA enabled for console access or no console password is set",
+    "uid": "prowler-aws-iam_user_mfa_enabled_console_access-123456789012-ap-south-1-ci-deploy"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "ci-deploy",
+     "type": "AwsIamUser",
+     "uid": "arn:aws:iam::123456789012:user/ci-deploy"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "RDS Instance acme-prod-db has backup enabled with retention period 7 days.",
+   "metadata": {
+    "event_code": "rds_instance_backup_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "RDS Instance acme-prod-db has backup enabled with retention period 7 days.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "rds",
+     "name": "RDS instance has backup retention period greater than 0 days",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "rds_instance_backup_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Initial Access"
+      },
+      "technique": {
+       "name": "Exploit Public-Facing Application",
+       "src_url": "https://attack.mitre.org/techniques/T1190/",
+       "uid": "T1190"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Destruction",
+       "src_url": "https://attack.mitre.org/techniques/T1485/",
+       "uid": "T1485"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Encrypted for Impact",
+       "src_url": "https://attack.mitre.org/techniques/T1486/",
+       "uid": "T1486"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Inhibit System Recovery",
+       "src_url": "https://attack.mitre.org/techniques/T1490/",
+       "uid": "T1490"
+      }
+     }
+    ],
+    "title": "RDS instance has backup retention period greater than 0 days",
+    "uid": "prowler-aws-rds_instance_backup_enabled-123456789012-ap-south-1-acme-prod-db"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-prod-db",
+     "type": "AwsRdsDbInstance",
+     "uid": "arn:aws:rds:ap-south-1:123456789012:db:acme-prod-db"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "RDS Instance acme-prod-db deletion protection is enabled.",
+   "metadata": {
+    "event_code": "rds_instance_deletion_protection",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "RDS Instance acme-prod-db deletion protection is enabled.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "rds",
+     "name": "RDS instance has deletion protection enabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "rds_instance_deletion_protection"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Destruction",
+       "src_url": "https://attack.mitre.org/techniques/T1485/",
+       "uid": "T1485"
+      }
+     }
+    ],
+    "title": "RDS instance has deletion protection enabled",
+    "uid": "prowler-aws-rds_instance_deletion_protection-123456789012-ap-south-1-acme-prod-db"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-prod-db",
+     "type": "AwsRdsDbInstance",
+     "uid": "arn:aws:rds:ap-south-1:123456789012:db:acme-prod-db"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "RDS Instance acme-prod-db is not publicly accessible.",
+   "metadata": {
+    "event_code": "rds_instance_no_public_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "RDS Instance acme-prod-db is not publicly accessible.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "2.2.3"
+     ],
+     "CIS-6.0": [
+      "3.2.3"
+     ],
+     "CIS-2.0": [
+      "2.3.3"
+     ],
+     "CIS-1.5": [
+      "2.3.3"
+     ],
+     "CIS-3.0": [
+      "2.3.3"
+     ],
+     "CIS-7.0": [
+      "3.2.3"
+     ],
+     "CIS-5.0": [
+      "2.2.3"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "rds",
+     "name": "RDS instance is not publicly exposed to the Internet",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "rds_instance_no_public_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     }
+    ],
+    "title": "RDS instance is not publicly exposed to the Internet",
+    "uid": "prowler-aws-rds_instance_no_public_access-123456789012-ap-south-1-acme-prod-db"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-prod-db",
+     "type": "AwsRdsDbInstance",
+     "uid": "arn:aws:rds:ap-south-1:123456789012:db:acme-prod-db"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "RDS Instance acme-prod-db is encrypted.",
+   "metadata": {
+    "event_code": "rds_instance_storage_encrypted",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "RDS Instance acme-prod-db is encrypted.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-4.0.1": [
+      "2.2.1"
+     ],
+     "CIS-1.4": [
+      "2.3.1"
+     ],
+     "CIS-6.0": [
+      "3.2.1"
+     ],
+     "CIS-2.0": [
+      "2.3.1"
+     ],
+     "CIS-1.5": [
+      "2.3.1"
+     ],
+     "CIS-3.0": [
+      "2.3.1"
+     ],
+     "CIS-7.0": [
+      "3.2.1"
+     ],
+     "CIS-5.0": [
+      "2.2.1"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "rds",
+     "name": "RDS DB instance storage is encrypted at rest",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "rds_instance_storage_encrypted"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Automated Collection",
+       "src_url": "https://attack.mitre.org/techniques/T1119/",
+       "uid": "T1119"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     }
+    ],
+    "title": "RDS DB instance storage is encrypted at rest",
+    "uid": "prowler-aws-rds_instance_storage_encrypted-123456789012-ap-south-1-acme-prod-db"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-prod-db",
+     "type": "AwsRdsDbInstance",
+     "uid": "arn:aws:rds:ap-south-1:123456789012:db:acme-prod-db"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "RDS Instance Snapshot rds:acme-prod-db-2026-11-02-11-14 is not shared.",
+   "metadata": {
+    "event_code": "rds_snapshots_public_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "RDS Instance Snapshot rds:acme-prod-db-2026-11-02-11-14 is not shared.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "rds",
+     "name": "RDS snapshot is not publicly shared",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "rds_snapshots_public_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     }
+    ],
+    "title": "RDS snapshot is not publicly shared",
+    "uid": "prowler-aws-rds_snapshots_public_access-123456789012-ap-south-1-rds:acme-prod-db-2026-11-02-11-14"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "rds:acme-prod-db-2026-11-02-11-14",
+     "type": "AwsRdsDbSnapshot",
+     "uid": "arn:aws:rds:ap-south-1:123456789012:snapshot:rds:acme-prod-db-2026-11-02-11-14"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-trail has Server Side Encryption with AES256.",
+   "metadata": {
+    "event_code": "s3_bucket_default_encryption",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-trail has Server Side Encryption with AES256.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-1.4": [
+      "2.1.1"
+     ],
+     "CIS-1.5": [
+      "2.1.1"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "[DEPRECATED] S3 bucket has default server-side encryption (SSE) enabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_default_encryption"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Automated Collection",
+       "src_url": "https://attack.mitre.org/techniques/T1119/",
+       "uid": "T1119"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     }
+    ],
+    "title": "[DEPRECATED] S3 bucket has default server-side encryption (SSE) enabled",
+    "uid": "prowler-aws-s3_bucket_default_encryption-123456789012-ap-south-1-acme-demo-trail"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-trail",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-trail"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-uploads has Server Side Encryption with AES256.",
+   "metadata": {
+    "event_code": "s3_bucket_default_encryption",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-uploads has Server Side Encryption with AES256.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-1.4": [
+      "2.1.1"
+     ],
+     "CIS-1.5": [
+      "2.1.1"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "[DEPRECATED] S3 bucket has default server-side encryption (SSE) enabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_default_encryption"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Automated Collection",
+       "src_url": "https://attack.mitre.org/techniques/T1119/",
+       "uid": "T1119"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     }
+    ],
+    "title": "[DEPRECATED] S3 bucket has default server-side encryption (SSE) enabled",
+    "uid": "prowler-aws-s3_bucket_default_encryption-123456789012-ap-south-1-acme-demo-uploads"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-uploads",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-uploads"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-invoices has Server Side Encryption with AES256.",
+   "metadata": {
+    "event_code": "s3_bucket_default_encryption",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 3,
+   "severity": "Medium",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-invoices has Server Side Encryption with AES256.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-1.4": [
+      "2.1.1"
+     ],
+     "CIS-1.5": [
+      "2.1.1"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "[DEPRECATED] S3 bucket has default server-side encryption (SSE) enabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_default_encryption"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Automated Collection",
+       "src_url": "https://attack.mitre.org/techniques/T1119/",
+       "uid": "T1119"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     }
+    ],
+    "title": "[DEPRECATED] S3 bucket has default server-side encryption (SSE) enabled",
+    "uid": "prowler-aws-s3_bucket_default_encryption-123456789012-ap-south-1-acme-demo-invoices"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-invoices",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-invoices"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-trail does not have a bucket policy.",
+   "metadata": {
+    "event_code": "s3_bucket_policy_public_write_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-trail does not have a bucket policy.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-7.0": [
+      "2.21"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket policy does not allow public write access",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_policy_public_write_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Destruction",
+       "src_url": "https://attack.mitre.org/techniques/T1485/",
+       "uid": "T1485"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Encrypted for Impact",
+       "src_url": "https://attack.mitre.org/techniques/T1486/",
+       "uid": "T1486"
+      }
+     }
+    ],
+    "title": "S3 bucket policy does not allow public write access",
+    "uid": "prowler-aws-s3_bucket_policy_public_write_access-123456789012-ap-south-1-acme-demo-trail"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-trail",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-trail"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-uploads does not allow public write access in the bucket policy.",
+   "metadata": {
+    "event_code": "s3_bucket_policy_public_write_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-uploads does not allow public write access in the bucket policy.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-7.0": [
+      "2.21"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket policy does not allow public write access",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_policy_public_write_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Destruction",
+       "src_url": "https://attack.mitre.org/techniques/T1485/",
+       "uid": "T1485"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Encrypted for Impact",
+       "src_url": "https://attack.mitre.org/techniques/T1486/",
+       "uid": "T1486"
+      }
+     }
+    ],
+    "title": "S3 bucket policy does not allow public write access",
+    "uid": "prowler-aws-s3_bucket_policy_public_write_access-123456789012-ap-south-1-acme-demo-uploads"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-uploads",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-uploads"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-invoices does not have a bucket policy.",
+   "metadata": {
+    "event_code": "s3_bucket_policy_public_write_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-invoices does not have a bucket policy.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {
+     "CIS-7.0": [
+      "2.21"
+     ]
+    },
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket policy does not allow public write access",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_policy_public_write_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Destruction",
+       "src_url": "https://attack.mitre.org/techniques/T1485/",
+       "uid": "T1485"
+      }
+     },
+     {
+      "tactic": {
+       "name": "Impact"
+      },
+      "technique": {
+       "name": "Data Encrypted for Impact",
+       "src_url": "https://attack.mitre.org/techniques/T1486/",
+       "uid": "T1486"
+      }
+     }
+    ],
+    "title": "S3 bucket policy does not allow public write access",
+    "uid": "prowler-aws-s3_bucket_policy_public_write_access-123456789012-ap-south-1-acme-demo-invoices"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-invoices",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-invoices"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-trail is not public.",
+   "metadata": {
+    "event_code": "s3_bucket_public_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-trail is not public.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket is not publicly accessible to Everyone or Authenticated Users",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_public_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     }
+    ],
+    "title": "S3 bucket is not publicly accessible to Everyone or Authenticated Users",
+    "uid": "prowler-aws-s3_bucket_public_access-123456789012-ap-south-1-acme-demo-trail"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-trail",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-trail"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-uploads has public access due to bucket policy.",
+   "metadata": {
+    "event_code": "s3_bucket_public_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "S3 Bucket acme-demo-uploads has public access due to bucket policy.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket is not publicly accessible to Everyone or Authenticated Users",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_public_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     }
+    ],
+    "title": "S3 bucket is not publicly accessible to Everyone or Authenticated Users",
+    "uid": "prowler-aws-s3_bucket_public_access-123456789012-ap-south-1-acme-demo-uploads"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-uploads",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-uploads"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-invoices is not public.",
+   "metadata": {
+    "event_code": "s3_bucket_public_access",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-invoices is not public.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket is not publicly accessible to Everyone or Authenticated Users",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_public_access"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Collection"
+      },
+      "technique": {
+       "name": "Data from Cloud Storage",
+       "src_url": "https://attack.mitre.org/techniques/T1530/",
+       "uid": "T1530"
+      }
+     }
+    ],
+    "title": "S3 bucket is not publicly accessible to Everyone or Authenticated Users",
+    "uid": "prowler-aws-s3_bucket_public_access-123456789012-ap-south-1-acme-demo-invoices"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-invoices",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-invoices"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-trail is not publicly listable.",
+   "metadata": {
+    "event_code": "s3_bucket_public_list_acl",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-trail is not publicly listable.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket is not publicly listable by Everyone or any authenticated AWS user",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_public_list_acl"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "S3 bucket is not publicly listable by Everyone or any authenticated AWS user",
+    "uid": "prowler-aws-s3_bucket_public_list_acl-123456789012-ap-south-1-acme-demo-trail"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-trail",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-trail"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-uploads is not publicly listable.",
+   "metadata": {
+    "event_code": "s3_bucket_public_list_acl",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-uploads is not publicly listable.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket is not publicly listable by Everyone or any authenticated AWS user",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_public_list_acl"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "S3 bucket is not publicly listable by Everyone or any authenticated AWS user",
+    "uid": "prowler-aws-s3_bucket_public_list_acl-123456789012-ap-south-1-acme-demo-uploads"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-uploads",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-uploads"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-invoices is not publicly listable.",
+   "metadata": {
+    "event_code": "s3_bucket_public_list_acl",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-invoices is not publicly listable.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket is not publicly listable by Everyone or any authenticated AWS user",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_public_list_acl"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "S3 bucket is not publicly listable by Everyone or any authenticated AWS user",
+    "uid": "prowler-aws-s3_bucket_public_list_acl-123456789012-ap-south-1-acme-demo-invoices"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-invoices",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-invoices"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-trail is not publicly writable.",
+   "metadata": {
+    "event_code": "s3_bucket_public_write_acl",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-trail is not publicly writable.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket ACL does not grant write access to Everyone or any AWS customer",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_public_write_acl"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "S3 bucket ACL does not grant write access to Everyone or any AWS customer",
+    "uid": "prowler-aws-s3_bucket_public_write_acl-123456789012-ap-south-1-acme-demo-trail"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-trail",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-trail"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-uploads is not publicly writable.",
+   "metadata": {
+    "event_code": "s3_bucket_public_write_acl",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-uploads is not publicly writable.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket ACL does not grant write access to Everyone or any AWS customer",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_public_write_acl"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "S3 bucket ACL does not grant write access to Everyone or any AWS customer",
+    "uid": "prowler-aws-s3_bucket_public_write_acl-123456789012-ap-south-1-acme-demo-uploads"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-uploads",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-uploads"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "S3 Bucket acme-demo-invoices is not publicly writable.",
+   "metadata": {
+    "event_code": "s3_bucket_public_write_acl",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 5,
+   "severity": "Critical",
+   "status": "New",
+   "status_code": "PASS",
+   "status_detail": "S3 Bucket acme-demo-invoices is not publicly writable.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "s3",
+     "name": "S3 bucket ACL does not grant write access to Everyone or any AWS customer",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "s3_bucket_public_write_acl"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "title": "S3 bucket ACL does not grant write access to Everyone or any AWS customer",
+    "uid": "prowler-aws-s3_bucket_public_write_acl-123456789012-ap-south-1-acme-demo-invoices"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme-demo-invoices",
+     "type": "AwsS3Bucket",
+     "uid": "arn:aws:s3:::acme-demo-invoices"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  },
+  {
+   "message": "SecretsManager secret acme/prod/db has rotation disabled.",
+   "metadata": {
+    "event_code": "secretsmanager_automatic_rotation_enabled",
+    "product": {
+     "name": "Prowler",
+     "uid": "prowler",
+     "vendor_name": "Prowler",
+     "version": "5.47.0"
+    },
+    "profiles": [
+     "cloud",
+     "datetime"
+    ],
+    "tenant_uid": "",
+    "version": "1.5.0"
+   },
+   "severity_id": 4,
+   "severity": "High",
+   "status": "New",
+   "status_code": "FAIL",
+   "status_detail": "SecretsManager secret acme/prod/db has rotation disabled.",
+   "status_id": 1,
+   "unmapped": {
+    "compliance": {},
+    "scan_id": "01a19bf8-039f-7a7e-b7e1-8ae835d66a63",
+    "provider_uid": "123456789012",
+    "provider": "aws"
+   },
+   "finding_info": {
+    "analytic": {
+     "category": "secretsmanager",
+     "name": "Secrets Manager secret has rotation enabled",
+     "type": "Rule",
+     "type_id": 1,
+     "uid": "secretsmanager_automatic_rotation_enabled"
+    },
+    "created_time": 1793618084,
+    "created_time_dt": "2026-11-02T11:14:44.767140",
+    "attacks": [
+     {
+      "tactic": {
+       "name": "Credential Access"
+      },
+      "technique": {
+       "name": "Unsecured Credentials",
+       "src_url": "https://attack.mitre.org/techniques/T1552/",
+       "uid": "T1552"
+      }
+     }
+    ],
+    "title": "Secrets Manager secret has rotation enabled",
+    "uid": "prowler-aws-secretsmanager_automatic_rotation_enabled-123456789012-ap-south-1-acme/prod/db"
+   },
+   "resources": [
+    {
+     "region": "ap-south-1",
+     "name": "acme/prod/db",
+     "type": "AwsSecretsManagerSecret",
+     "uid": "arn:aws:secretsmanager:ap-south-1:123456789012:secret:acme/prod/db-zTNKUh"
+    }
+   ],
+   "cloud": {
+    "account": {
+     "name": "",
+     "type": "AWS Account",
+     "type_id": 10,
+     "uid": "123456789012",
+     "labels": []
+    },
+    "provider": "aws",
+    "region": "ap-south-1"
+   },
+   "time_dt": "2026-11-02T11:14:44.767140"
+  }
+ ],
+ "native": [
+  {
+   "check_id": "native:spend_alerts",
+   "status": "PASS",
+   "region": "global",
+   "resource_uid": "arn:aws:budgets::123456789012:budget",
+   "resource_type": "AwsBudget",
+   "resource_name": "arn:aws:budgets::123456789012:budget",
+   "message": "1 budget(s) with alerts: monthly",
+   "severity": "",
+   "muted": false,
+   "compliance": {},
+   "account_id": "",
+   "prowler_version": "",
+   "time": ""
+  },
+  {
+   "check_id": "native:ci_oidc",
+   "status": "FAIL",
+   "region": "global",
+   "resource_uid": "arn:aws:iam::123456789012:user/ci-deploy",
+   "resource_type": "AwsIamUser",
+   "resource_name": "ci-deploy",
+   "message": "IAM user 'ci-deploy' looks like a CI/CD identity and has an active access key (created 2026-11-02); replace it with an OIDC role",
+   "severity": "",
+   "muted": false,
+   "compliance": {},
+   "account_id": "",
+   "prowler_version": "",
+   "time": ""
+  }
+ ]
+}

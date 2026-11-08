@@ -1,0 +1,35 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "BillDoctorReadOnlyInventory",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeAddresses",
+        "ec2:DescribeImages",
+        "ec2:DescribeInstances",
+        "ec2:DescribeNatGateways",
+        "ec2:DescribeRegions",
+        "ec2:DescribeSnapshots",
+        "ec2:DescribeVolumes",
+        "elasticloadbalancing:DescribeLoadBalancers",
+        "elasticloadbalancing:DescribeTargetGroups",
+        "elasticloadbalancing:DescribeTargetHealth",
+        "cloudwatch:GetMetricStatistics",
+        "rds:DescribeDBInstances",
+        "logs:DescribeLogGroups",
+        "s3:ListAllMyBuckets",
+        "s3:GetBucketLocation",
+        "s3:GetBucketVersioning",
+        "s3:GetLifecycleConfiguration"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "OptionalCostExplorer",
+      "Effect": "Allow",
+      "Action": ["ce:GetCostAndUsage"],
+      "Resource": "*"
+    }
+  ]
+}

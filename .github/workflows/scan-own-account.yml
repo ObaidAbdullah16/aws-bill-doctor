@@ -1,0 +1,81 @@
+# Runs Bill Doctor (cost) and the security baseline check against your own AWS account with the
+# read-only OIDC role created by aws-foundation (gha-aws-bill-doctor). No keys are stored in GitHub.
+name: Scan my AWS account
+on:
+  workflow_dispatch:
+    inputs:
+      regions:
+        description: Comma-separated regions
+        default: ap-southeast-2,us-east-1
+  schedule:
+    - cron: "37 3 1 * *"   # 1st of every month, 09:07 IST
+
+permissions: {}
+
+jobs:
+  scan:
+    if: vars.AWS_ROLE_ARN != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: aws
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.13"
+      - run: pip install -e .
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION || 'ap-southeast-2' }}
+          role-session-name: bill-doctor-scan
+      - name: Scan (read-only)
+        env:
+          REGIONS: ${{ inputs.regions || 'ap-southeast-2,us-east-1' }}
+        run: |
+          billdoctor scan --regions "$REGIONS" --label "my account" --out report
+          cat report/report.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: bill-doctor-report
+          path: report/
+          retention-days: 30
+
+  security:
+    if: vars.AWS_ROLE_ARN != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: aws
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - run: pipx install "prowler==5.47.0"
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION || 'ap-southeast-2' }}
+          role-session-name: security-baseline-scan
+      - name: Security baseline (read-only)
+        env:
+          REGIONS: ${{ inputs.regions || 'ap-southeast-2,us-east-1' }}
+        run: |
+          billdoctor security scan --regions "$REGIONS" --label "my account" --out security-report
+          cat security-report/report.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: security-baseline-report
+          path: security-report/
+          retention-days: 30

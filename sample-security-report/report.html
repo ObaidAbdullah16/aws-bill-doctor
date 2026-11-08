@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS security baseline check - Acme Retail (synthetic demo)</title>
+<style>
+:root{--bg:#f5f6f8;--fg:#18202e;--card:#fff;--line:#dfe3e8;--muted:#5b6475;--accent:#0b6bcb;--critical:#8e1b1b;--high:#c62828;--medium:#b26a00;--low:#2e7d32;--info:#607080;--pass:#2e7d32;--fail:#c62828;--review:#b26a00}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1116;--fg:#e8edf3;--card:#161b22;--line:#2d333b;--muted:#94a0b0;--accent:#58a6ff;--critical:#ff8f8f;--high:#f47067;--medium:#d29922;--low:#57ab5a;--info:#8b949e;--pass:#57ab5a;--fail:#f47067;--review:#d29922}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1060px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:26px;margin:0}h2{font-size:19px;margin:32px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}h3{font-size:16px;margin:22px 0 6px}
+.muted{color:var(--muted)}
+.banner{background:#fff4ce;color:#5c4400;border:1px solid #e3c35a;border-radius:8px;padding:10px 14px;margin:14px 0;font-weight:600}
+.note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:10px 14px;margin:14px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card .v{font-size:28px;font-weight:700}.card .l{color:var(--muted);font-size:13px}
+.grade{display:inline-block;margin-left:8px;font-size:18px;padding:0 9px;border-radius:8px;border:2px solid currentColor}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px;margin:6px 0 12px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+code{font-size:12.5px;word-break:break-all}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid currentColor;white-space:nowrap}
+.critical{color:var(--critical)}.high{color:var(--high)}.medium{color:var(--medium)}.low{color:var(--low)}
+.s-pass{color:var(--pass)}.s-fail{color:var(--fail)}.s-manual{color:var(--review)}.s-no-resources,.s-not-evaluated{color:var(--info)}
+details{margin-top:4px}summary{cursor:pointer;color:var(--accent);font-size:13px}
+pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;font-size:12px;margin:4px 0}
+.why{color:var(--muted);margin:2px 0 6px}
+.ctl{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+.ctl .head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.ctl .head strong{flex:1 1 320px}
+footer{margin-top:40px;color:var(--muted);font-size:13px}
+@media print{body{background:#fff;color:#000}.card,table,.ctl{border-color:#bbb}details>summary{list-style:none;color:#000;font-weight:600}details::details-content{content-visibility:visible;display:block}a{color:#000}.ctl{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main>
+  <h1>AWS security baseline check</h1>
+  <div class="muted">Account Acme Retail (synthetic demo) (123456789012) &middot; regions ap-south-1 &middot; 02 Nov 2026, 11:39 UTC</div>
+  <div class="banner">SYNTHETIC DEMO DATA &mdash; real Prowler checks run against a simulated AWS account (moto) seeded with a fictional company&#39;s typical mistakes. No customer data.</div>
+
+  <div class="cards">
+    <div class="card"><div class="l">Baseline score</div><div class="v">31/100<span class="grade s-fail">F</span></div><div class="l">weighted by severity</div></div>
+    <div class="card"><div class="l">Controls failing</div><div class="v">15 of 25</div>
+      <div class="l"><span class="critical">3 critical</span> &middot; <span class="high">5 high</span> &middot; <span class="medium">6 medium</span> &middot; <span class="low">1 low</span></div></div>
+    <div class="card"><div class="l">Controls passing</div><div class="v">6</div><div class="l">1 not applicable &middot; 0 to review</div></div>
+    <div class="card"><div class="l">Coverage</div><div class="v">83%</div><div class="l">of the baseline could be evaluated</div></div>
+  </div>
+
+
+  <h2>Summary</h2>
+  <p>
+    The account was checked against 25 baseline controls covering identity, logging, data, network and secrets,
+    using read-only access only. It scores <strong>31/100 (grade F)</strong>.
+The most urgent finding: <strong>S3 Bucket acme-demo-uploads has public access due to bucket policy</strong> (DA-02, critical). Public buckets are found by automated scanners within hours.    Nothing was changed in the account. Every fix below is code or a command for you to review and apply; a retest scan confirms it.
+  </p>
+
+  <h2>Top risks</h2>
+  <table><thead><tr><th style="width:9%">Severity</th><th style="width:25%">Control</th><th style="width:33%">What we found</th><th>First step</th></tr></thead><tbody>
+    <tr><td><span class="pill critical">critical</span></td>
+      <td><strong>DA-02</strong> No bucket is public</td>
+      <td>S3 Bucket acme-demo-uploads has public access due to bucket policy. <span class="muted">(acme-demo-uploads)</span><br></td>
+      <td>aws s3api put-public-access-block --bucket &lt;bucket&gt; --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true</td></tr>
+    <tr><td><span class="pill critical">critical</span></td>
+      <td><strong>NC-01</strong> No SSH, RDP or database port is open to the whole internet</td>
+      <td>Security group api (sg-1c5d8088dba90bc1a) has SSH port 22 open to the Internet. <span class="muted">(sg-1c5d8088dba90bc1a)</span><br></td>
+      <td>aws ec2 revoke-security-group-ingress --group-id &lt;sg&gt; --protocol tcp --port 22 --cidr 0.0.0.0/0</td></tr>
+    <tr><td><span class="pill critical">critical</span></td>
+      <td><strong>SP-01</strong> No secrets in Lambda variables, EC2 user data or launch templates</td>
+      <td>Potential secret found in Lambda function acme-invoice-mailer variables -&gt; SMTP Credentials in variable SMTP_PASSWORD, Generic Password in variable SMTP_PASSWORD. <span class="muted">(acme-invoice-mailer)</span><br></td>
+      <td>Move each value to Secrets Manager or SSM Parameter Store (SecureString), read it at runtime, then rotate it - it must be treated as exposed.</td></tr>
+    <tr><td><span class="pill high">high</span></td>
+      <td><strong>ID-02</strong> Every console user has MFA</td>
+      <td>User priya.sharma has Console Password enabled but MFA disabled. <span class="muted">(priya.sharma)</span><br></td>
+      <td>aws iam list-virtual-mfa-devices  # find users without a device, then enable MFA for each, or move people to IAM Identity Center</td></tr>
+    <tr><td><span class="pill high">high</span></td>
+      <td><strong>ID-05</strong> Full administrator rights are limited to a break-glass role</td>
+      <td>AWS policy AdministratorAccess is attached and allows &#39;*:*&#39; administrative privileges. <span class="muted">(AdministratorAccess)</span><br></td>
+      <td>aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AdministratorAccess</td></tr>
+  </tbody></table>
+
+
+  <h2>All controls</h2>
+    <h3>Identity and access</h3>
+    <div class="ctl" id="ID-01">
+      <div class="head"><span class="pill s-not-evaluated">Not evaluated</span><strong>ID-01 &middot; Root user is protected (MFA on, no access keys)</strong><span class="pill critical">critical</span></div>
+      <p class="why">The root user can do everything, including closing the account. A stolen root password or key is a total loss.</p>
+      <div>not evaluated (the scanner returned no result - see Method)</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: iam_root_mfa_enabled, iam_no_root_access_key      </div>
+    </div>
+    <div class="ctl" id="ID-02">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>ID-02 &middot; Every console user has MFA</strong><span class="pill high">high</span></div>
+      <p class="why">Passwords get phished and reused. MFA stops most account takeovers.</p>
+      <div>1 failing item, 1 passing</div>
+      <details open><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:iam::123456789012:user/priya.sharma</code></td><td>ap-south-1</td><td>User priya.sharma has Console Password enabled but MFA disabled.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<pre>aws iam list-virtual-mfa-devices  # find users without a device, then enable MFA for each, or move people to IAM Identity Center</pre><div><strong>Console:</strong> IAM &gt; Users &gt; (user) &gt; Security credentials &gt; Assign MFA device.</div>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: iam_user_mfa_enabled_console_access &middot; CIS-7.0 2.10      </div>
+    </div>
+    <div class="ctl" id="ID-03">
+      <div class="head"><span class="pill s-pass">Pass</span><strong>ID-03 &middot; Access keys are rotated and unused keys removed</strong><span class="pill high">high</span></div>
+      <p class="why">Long-lived keys leak through laptops, CI logs and git history. Datadog found active keys over a year old at 59% of IAM users.</p>
+      <div>6 items checked, all passing</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: iam_rotate_access_key_90_days, iam_user_accesskey_unused, iam_user_console_access_unused &middot; CIS-7.0 2.11, CIS-7.0 2.12      </div>
+    </div>
+    <div class="ctl" id="ID-04">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>ID-04 &middot; People get permissions through groups, roles or SSO - not attached to users</strong><span class="pill medium">medium</span></div>
+      <p class="why">Permissions attached user by user drift and are never reviewed. Groups, roles and IAM Identity Center keep access auditable.</p>
+      <div>1 failing item, 1 passing</div>
+      <details><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:iam::123456789012:user/ci-deploy</code></td><td>ap-south-1</td><td>User ci-deploy has the policy AdministratorAccess attached.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<pre>aws iam detach-user-policy --user-name &lt;user&gt; --policy-arn &lt;arn&gt;   # after adding the user to a group with the same rights</pre><div><strong>Console:</strong> Prefer IAM Identity Center: one login per person, permission sets per job, no long-lived keys.</div>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: iam_policy_attached_only_to_group_or_roles &middot; CIS-7.0 2.13      </div>
+    </div>
+    <div class="ctl" id="ID-05">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>ID-05 &middot; Full administrator rights are limited to a break-glass role</strong><span class="pill high">high</span></div>
+      <p class="why">Every identity with AdministratorAccess is a way to lose the whole account. Most teams need two or three, not ten.</p>
+      <div>1 failing item, 1 passing</div>
+      <details open><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:iam::aws:policy/AdministratorAccess</code></td><td>ap-south-1</td><td>AWS policy AdministratorAccess is attached and allows &#39;*:*&#39; administrative privileges.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<pre>aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AdministratorAccess</pre><div><strong>Console:</strong> Replace AdministratorAccess with job-based policies (PowerUserAccess, ReadOnlyAccess, or service-scoped). Keep one MFA-protected break-glass role.</div>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: iam_aws_attached_policy_no_administrative_privileges, iam_customer_attached_policy_no_administrative_privileges, iam_inline_policy_no_administrative_privileges &middot; CIS-7.0 2.14      </div>
+    </div>
+    <div class="ctl" id="ID-06">
+      <div class="head"><span class="pill s-pass">Pass</span><strong>ID-06 &middot; Password policy requires long, non-reused passwords</strong><span class="pill low">low</span></div>
+      <p class="why">Only matters for IAM users with console access, but auditors and customer questionnaires ask for it.</p>
+      <div>2 items checked, all passing</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: iam_password_policy_minimum_length_14, iam_password_policy_reuse_24 &middot; CIS-7.0 2.8, CIS-7.0 2.9      </div>
+    </div>
+    <div class="ctl" id="ID-07">
+      <div class="head"><span class="pill s-not-evaluated">Not evaluated</span><strong>ID-07 &middot; IAM Access Analyzer watches for external access</strong><span class="pill medium">medium</span></div>
+      <p class="why">It flags buckets, roles and keys shared with other accounts or the public - for free.</p>
+      <div>not evaluated (the scanner returned no result - see Method)</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: accessanalyzer_enabled      </div>
+    </div>
+    <h3>Logging and detection</h3>
+    <div class="ctl" id="LD-01">
+      <div class="head"><span class="pill s-pass">Pass</span><strong>LD-01 &middot; CloudTrail records every region, with tamper-evident, private logs</strong><span class="pill critical">critical</span></div>
+      <p class="why">Without CloudTrail there is no record of who did what - no investigation, and no basis for a breach report.</p>
+      <div>3 items checked, all passing</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: cloudtrail_multi_region_enabled, cloudtrail_log_file_validation_enabled, cloudtrail_logs_s3_bucket_is_not_publicly_accessible &middot; CIS-2.0 3.3, CIS-7.0 4.1, CIS-7.0 4.2      </div>
+    </div>
+    <div class="ctl" id="LD-02">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>LD-02 &middot; GuardDuty threat detection is on</strong><span class="pill high">high</span></div>
+      <p class="why">GuardDuty spots stolen credentials, crypto-mining and unusual API calls. Costs a few dollars a month for small accounts.</p>
+      <div>1 failing item</div>
+      <details open><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:guardduty:ap-south-1:123456789012:detector/unknown</code></td><td>ap-south-1</td><td>GuardDuty is not enabled.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<div><strong>Terraform:</strong> <code>module.security_baseline: guardduty = true</code></div><pre>aws guardduty create-detector --enable --finding-publishing-frequency FIFTEEN_MINUTES</pre>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: guardduty_is_enabled      </div>
+    </div>
+    <div class="ctl" id="LD-03">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>LD-03 &middot; AWS Config records configuration changes</strong><span class="pill medium">medium</span></div>
+      <p class="why">Config keeps a history of how each resource was configured - the evidence auditors and investigators ask for.</p>
+      <div>1 failing item</div>
+      <details><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:config:ap-south-1:123456789012:recorder</code></td><td>ap-south-1</td><td>AWS Config recorder 123456789012 is disabled.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<div><strong>Terraform:</strong> <code>module.security_baseline: config_recorder = true</code></div><div><strong>Console:</strong> AWS Config &gt; Get started &gt; record all resources &gt; deliver to the CloudTrail logs bucket.</div>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: config_recorder_all_regions_enabled &middot; CIS-7.0 4.3      </div>
+    </div>
+    <div class="ctl" id="LD-04">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>LD-04 &middot; Log groups keep logs for at least a year</strong><span class="pill medium">medium</span></div>
+      <p class="why">Logs kept for days or weeks are gone when an incident is found months later. One year is the minimum many customers - and India&#39;s DPDP Rules - expect for security logs. (&#39;Never expire&#39; passes here; the cost check LOGS-001 flags its price.)</p>
+      <div>1 failing item, 1 passing</div>
+      <details><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:logs:ap-south-1:123456789012:log-group:/acme/api:*</code></td><td>ap-south-1</td><td>Log Group /acme/api has less than 365 days retention period (7 days).</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<pre>bash aws-foundation/fix-pack/scripts/set-log-retention.sh --days 365   # dry run first; add --apply to change</pre>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: cloudwatch_log_group_retention_policy_specific_days_enabled      </div>
+    </div>
+    <div class="ctl" id="LD-05">
+      <div class="head"><span class="pill s-pass">Pass</span><strong>LD-05 &middot; Spend alerts would catch abuse within a day</strong><span class="pill medium">medium</span></div>
+      <p class="why">A stolen key used for crypto-mining shows up first on the bill. Budgets with email alerts are free.</p>
+      <div>1 item checked, all passing</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Native check: spend_alerts      </div>
+    </div>
+    <h3>Data protection</h3>
+    <div class="ctl" id="DA-01">
+      <div class="head"><span class="pill s-not-evaluated">Not evaluated</span><strong>DA-01 &middot; S3 Block Public Access is on for the whole account</strong><span class="pill critical">critical</span></div>
+      <p class="why">One account-wide switch stops any bucket from being made public by mistake - the cause of many data leaks.</p>
+      <div>not evaluated (the scanner returned no result - see Method)</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: s3_account_level_public_access_blocks      </div>
+    </div>
+    <div class="ctl" id="DA-02">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>DA-02 &middot; No bucket is public</strong><span class="pill critical">critical</span></div>
+      <p class="why">Public buckets are found by automated scanners within hours.</p>
+      <div>1 failing item, 11 passing</div>
+      <details open><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:s3:::acme-demo-uploads</code></td><td>ap-south-1</td><td>S3 Bucket acme-demo-uploads has public access due to bucket policy.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<pre>aws s3api put-public-access-block --bucket &lt;bucket&gt; --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
+# if the bucket serves a website, put CloudFront with origin access control in front instead</pre>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: s3_bucket_public_access, s3_bucket_policy_public_write_access, s3_bucket_public_list_acl, s3_bucket_public_write_acl &middot; CIS-7.0 2.21      </div>
+    </div>
+    <div class="ctl" id="DA-03">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>DA-03 &middot; Data is encrypted by default (S3 and EBS)</strong><span class="pill medium">medium</span></div>
+      <p class="why">Default encryption is free and protects disks, snapshots and buckets that get copied or shared by mistake.</p>
+      <div>1 failing item, 3 passing</div>
+      <details><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:ec2:ap-south-1:123456789012:volume</code></td><td>ap-south-1</td><td>EBS Default Encryption is not activated.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<div><strong>Terraform:</strong> <code>module.security_baseline: ebs_encryption_by_default = true</code></div><pre>aws ec2 enable-ebs-encryption-by-default --region &lt;region&gt;</pre>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: s3_bucket_default_encryption, ec2_ebs_default_encryption &middot; CIS-1.5 2.1.1, CIS-7.0 6.1.1      </div>
+    </div>
+    <div class="ctl" id="DA-04">
+      <div class="head"><span class="pill s-pass">Pass</span><strong>DA-04 &middot; Databases are encrypted, private, backed up and protected from deletion</strong><span class="pill high">high</span></div>
+      <p class="why">An RDS instance reachable from the internet, without backups, is one mistake away from a data leak or permanent loss.</p>
+      <div>4 items checked, all passing</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: rds_instance_storage_encrypted, rds_instance_no_public_access, rds_instance_backup_enabled, rds_instance_deletion_protection &middot; CIS-7.0 3.2.1, CIS-7.0 3.2.3      </div>
+    </div>
+    <div class="ctl" id="DA-05">
+      <div class="head"><span class="pill s-pass">Pass</span><strong>DA-05 &middot; No snapshot is public</strong><span class="pill critical">critical</span></div>
+      <p class="why">A public EBS or RDS snapshot hands a full copy of the disk or database to anyone.</p>
+      <div>4 items checked, all passing</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: ec2_ebs_public_snapshot, rds_snapshots_public_access      </div>
+    </div>
+    <h3>Network and compute</h3>
+    <div class="ctl" id="NC-01">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>NC-01 &middot; No SSH, RDP or database port is open to the whole internet</strong><span class="pill critical">critical</span></div>
+      <p class="why">Open admin and database ports are scanned constantly; one weak password or unpatched service is enough.</p>
+      <div>1 failing item, 4 passing</div>
+      <details open><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:ec2:ap-south-1:123456789012:security-group/sg-1c5d8088dba90bc1a</code></td><td>ap-south-1</td><td>Security group api (sg-1c5d8088dba90bc1a) has SSH port 22 open to the Internet.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<pre>aws ec2 revoke-security-group-ingress --group-id &lt;sg&gt; --protocol tcp --port 22 --cidr 0.0.0.0/0
+# use SSM Session Manager (no open port) or a VPN/allow-list instead</pre>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_22, ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_3389, ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_mysql_3306, ec2_securitygroup_allow_ingress_from_internet_to_tcp_port_postgres_5432, ec2_securitygroup_allow_ingress_from_internet_to_all_ports &middot; CIS-7.0 6.3, CIS-7.0 6.4      </div>
+    </div>
+    <div class="ctl" id="NC-02">
+      <div class="head"><span class="pill s-no-resources">No resources</span><strong>NC-02 &middot; Default security groups allow no traffic</strong><span class="pill low">low</span></div>
+      <p class="why">Resources launched without a chosen group land in the default one; it should block everything.</p>
+      <div>no matching resources in the scanned regions</div>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: ec2_securitygroup_default_restrict_traffic      </div>
+    </div>
+    <div class="ctl" id="NC-03">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>NC-03 &middot; Instances require IMDSv2</strong><span class="pill high">high</span></div>
+      <p class="why">IMDSv1 lets an SSRF bug in a web app read the instance&#39;s cloud credentials (the Capital One breach). Datadog found IMDSv2 enforced on only 49% of instances.</p>
+      <div>1 failing item</div>
+      <details open><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:ec2:ap-south-1:123456789012:instance/i-2d70a6f89d6a8d1bd</code></td><td>ap-south-1</td><td>EC2 Instance i-2d70a6f89d6a8d1bd has IMDSv2 disabled or not required.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<div><strong>Terraform:</strong> <code>module.security_baseline: ec2_imdsv2_default = true   # new instances</code></div><pre>bash aws-foundation/fix-pack/scripts/require-imdsv2.sh --regions &lt;region&gt;   # dry run lists instances; --apply after testing one
+aws ec2 modify-instance-metadata-options --instance-id &lt;id&gt; --http-tokens required --http-put-response-hop-limit 2</pre>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: ec2_instance_imdsv2_enabled, ec2_instance_account_imdsv2_enabled &middot; CIS-7.0 6.7      </div>
+    </div>
+    <div class="ctl" id="NC-04">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>NC-04 &middot; Only intended instances have public IP addresses</strong><span class="pill medium">medium</span></div>
+      <p class="why">Every public instance is attack surface (and costs $3.65 a month per IPv4 address). Most belong behind a load balancer.</p>
+      <div>1 failing item</div>
+      <details><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:ec2:ap-south-1:123456789012:instance/i-2d70a6f89d6a8d1bd</code></td><td>ap-south-1</td><td>EC2 Instance i-2d70a6f89d6a8d1bd has a Public IP: 54.214.72.161 (ec2-54-214-72-161.ap-south-1.compute.amazonaws.com).</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<div><strong>Console:</strong> Move workloads to private subnets behind a load balancer; reach them with SSM Session Manager. Keep a public IP only where it is intended, and note it in the report.</div>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: ec2_instance_public_ip      </div>
+    </div>
+    <h3>Secrets and pipelines</h3>
+    <div class="ctl" id="SP-01">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>SP-01 &middot; No secrets in Lambda variables, EC2 user data or launch templates</strong><span class="pill critical">critical</span></div>
+      <p class="why">Anyone with read-only access - including auditors and many SaaS tools - can read these fields.</p>
+      <div>1 failing item, 1 passing</div>
+      <details open><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:lambda:ap-south-1:123456789012:function:acme-invoice-mailer</code></td><td>ap-south-1</td><td>Potential secret found in Lambda function acme-invoice-mailer variables -&gt; SMTP Credentials in variable SMTP_PASSWORD, Generic Password in variable SMTP_PASSWORD.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<div><strong>Console:</strong> Move each value to Secrets Manager or SSM Parameter Store (SecureString), read it at runtime, then rotate it - it must be treated as exposed.</div>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: awslambda_function_no_secrets_in_variables, ec2_instance_secrets_user_data, ec2_launch_template_no_secrets      </div>
+    </div>
+    <div class="ctl" id="SP-02">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>SP-02 &middot; Secrets Manager secrets rotate automatically</strong><span class="pill medium">medium</span></div>
+      <p class="why">A secret that never changes stays valid after every leak.</p>
+      <div>1 failing item</div>
+      <details><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:secretsmanager:ap-south-1:123456789012:secret:acme/prod/db-zTNKUh</code></td><td>ap-south-1</td><td>SecretsManager secret acme/prod/db has rotation disabled.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<pre>aws secretsmanager rotate-secret --secret-id &lt;id&gt; --rotation-lambda-arn &lt;arn&gt; --rotation-rules AutomaticallyAfterDays=90</pre>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: secretsmanager_automatic_rotation_enabled      </div>
+    </div>
+    <div class="ctl" id="SP-03">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>SP-03 &middot; CI/CD logs in with short-lived OIDC credentials, not stored keys</strong><span class="pill high">high</span></div>
+      <p class="why">Keys stored in CI were stolen in the tj-actions, Trivy and Checkmarx incidents. OIDC tokens expire in minutes.</p>
+      <div>1 failing item</div>
+      <details open><summary>Evidence (1)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:iam::123456789012:user/ci-deploy</code></td><td>global</td><td>IAM user &#39;ci-deploy&#39; looks like a CI/CD identity and has an active access key (created 2026-11-02); replace it with an OIDC role</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<div><strong>Terraform:</strong> <code>gha-hardening-kit/terraform/github-oidc-role (service S2)</code></div><div><strong>Console:</strong> Create an OIDC role trusted only by your repository&#39;s main branch or a protected environment, switch the workflow to role-to-assume, then delete the old access key.</div>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Native check: ci_oidc      </div>
+    </div>
+    <div class="ctl" id="SP-04">
+      <div class="head"><span class="pill s-fail">Fail</span><strong>SP-04 &middot; Container images are scanned on push and tags are immutable</strong><span class="pill low">low</span></div>
+      <p class="why">Scanning catches known vulnerabilities before deployment; immutable tags stop a pushed image being silently replaced.</p>
+      <div>3 failing items</div>
+      <details><summary>Evidence (3)</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+<tr><td><code>arn:aws:ecr:ap-south-1:123456789012:registry/123456789012</code></td><td>ap-south-1</td><td>ECR registry 123456789012 has BASIC scanning without automated scanning enabled.</td></tr><tr><td><code>arn:aws:ecr:ap-south-1:123456789012:repository/acme/api</code></td><td>ap-south-1</td><td>ECR repository acme/api has scan on push disabled.</td></tr><tr><td><code>arn:aws:ecr:ap-south-1:123456789012:repository/acme/api</code></td><td>ap-south-1</td><td>Repository acme/api does not have immutability configured.</td></tr>        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+<div><strong>Terraform:</strong> <code>module.security_baseline: ecr_scan_on_push = true</code></div><pre>aws ecr put-image-tag-mutability --repository-name &lt;repo&gt; --image-tag-mutability IMMUTABLE</pre>      </details>
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+Prowler: ecr_registry_scan_images_on_push_enabled, ecr_repositories_scan_images_on_push_enabled, ecr_repositories_tag_immutability      </div>
+    </div>
+
+
+
+  <h2>Method and limits</h2>
+  <ul>
+    <li>Read-only access: a cross-account role with the AWS-managed <code>SecurityAudit</code> and <code>ViewOnlyAccess</code> policies, a few extra
+      read permissions, and an explicit <strong>deny</strong> on reading data (S3 objects, database rows, secret values, log events). The account's own CloudTrail records every call.</li>
+    <li>Engine: Prowler 5.47.0 (open source, Apache-2.0) running 48 curated checks, plus two native checks for spend alerts and CI/CD credentials. Each finding was reviewed by a person before delivery.</li>
+    <li>Score: each evaluated control counts by severity (critical 10, high 6, medium 3, low 1). Controls with no matching resources, or that could not be evaluated, are left out of the score and shown as coverage instead.</li>
+    <li>Findings reflect the configuration at the time of the scan. A baseline check is not a penetration test and not a guarantee that the account cannot be breached.</li>
+<li>Not evaluated in the simulator (ID-01, ID-07, DA-01): it has no root user, IAM Access Analyzer or account-level S3 settings. A scan of a real account evaluates them.</li>  </ul>
+
+  <footer>Generated by AWS Bill Doctor 1.1.0 (security baseline) &middot; github.com/ObaidAbdullah16/aws-bill-doctor</footer>
+</main>
+<script>
+  addEventListener("beforeprint", () => document.querySelectorAll("details").forEach(d => { d.dataset.wasOpen = d.open; d.open = true; }));
+  addEventListener("afterprint", () => document.querySelectorAll("details").forEach(d => { d.open = d.dataset.wasOpen === "true"; }));
+</script>
+</body>
+</html>

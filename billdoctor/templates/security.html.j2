@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }} - {{ a.account_label or a.account_id }}</title>
+<style>
+:root{--bg:#f5f6f8;--fg:#18202e;--card:#fff;--line:#dfe3e8;--muted:#5b6475;--accent:#0b6bcb;--critical:#8e1b1b;--high:#c62828;--medium:#b26a00;--low:#2e7d32;--info:#607080;--pass:#2e7d32;--fail:#c62828;--review:#b26a00}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1116;--fg:#e8edf3;--card:#161b22;--line:#2d333b;--muted:#94a0b0;--accent:#58a6ff;--critical:#ff8f8f;--high:#f47067;--medium:#d29922;--low:#57ab5a;--info:#8b949e;--pass:#57ab5a;--fail:#f47067;--review:#d29922}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1060px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:26px;margin:0}h2{font-size:19px;margin:32px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}h3{font-size:16px;margin:22px 0 6px}
+.muted{color:var(--muted)}
+.banner{background:#fff4ce;color:#5c4400;border:1px solid #e3c35a;border-radius:8px;padding:10px 14px;margin:14px 0;font-weight:600}
+.note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:10px 14px;margin:14px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card .v{font-size:28px;font-weight:700}.card .l{color:var(--muted);font-size:13px}
+.grade{display:inline-block;margin-left:8px;font-size:18px;padding:0 9px;border-radius:8px;border:2px solid currentColor}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px;margin:6px 0 12px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+code{font-size:12.5px;word-break:break-all}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid currentColor;white-space:nowrap}
+.critical{color:var(--critical)}.high{color:var(--high)}.medium{color:var(--medium)}.low{color:var(--low)}
+.s-pass{color:var(--pass)}.s-fail{color:var(--fail)}.s-manual{color:var(--review)}.s-no-resources,.s-not-evaluated{color:var(--info)}
+details{margin-top:4px}summary{cursor:pointer;color:var(--accent);font-size:13px}
+pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;font-size:12px;margin:4px 0}
+.why{color:var(--muted);margin:2px 0 6px}
+.ctl{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+.ctl .head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.ctl .head strong{flex:1 1 320px}
+footer{margin-top:40px;color:var(--muted);font-size:13px}
+@media print{body{background:#fff;color:#000}.card,table,.ctl{border-color:#bbb}details>summary{list-style:none;color:#000;font-weight:600}details::details-content{content-visibility:visible;display:block}a{color:#000}.ctl{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main>
+  <h1>{{ title }}</h1>
+  <div class="muted">Account {{ a.account_label or a.account_id }}{% if a.account_label and a.account_id != "unknown" %} ({{ a.account_id }}){% endif %} &middot; regions {{ a.regions|join(", ") or "-" }} &middot; {{ a.started_at.strftime("%d %b %Y, %H:%M UTC") }}</div>
+  {% if a.synthetic %}
+  <div class="banner">SYNTHETIC DEMO DATA &mdash; {{ a.synthetic_note or "generated against a simulated AWS account. It shows what a real report looks like; no customer data." }}</div>
+  {% endif %}
+  {% if dpdp %}
+  <div class="note"><strong>Technical readiness, not legal advice.</strong> This report checks the technical safeguards that can be inspected in the
+  AWS account (encryption, access control, logging, backups, breach detection) against the expectations of India's Digital Personal Data
+  Protection Rules, 2025. Consent, notices, processor contracts and the legal interpretation of the Rules are outside its scope:
+  please have them reviewed by a lawyer.</div>
+  {% endif %}
+
+  <div class="cards">
+    <div class="card"><div class="l">Baseline score</div><div class="v">{{ a.score }}/100<span class="grade {{ 's-pass' if a.score >= 75 else 's-manual' if a.score >= 40 else 's-fail' }}">{{ a.grade }}</span></div><div class="l">weighted by severity</div></div>
+    {% set fs = a.failing_by_severity() %}
+    <div class="card"><div class="l">Controls failing</div><div class="v">{{ a.counts()["fail"] }} of {{ a.results|length }}</div>
+      <div class="l">{% for k, v in fs.items() if v %}<span class="{{ k }}">{{ v }} {{ k }}</span>{% if not loop.last %} &middot; {% endif %}{% else %}none{% endfor %}</div></div>
+    <div class="card"><div class="l">Controls passing</div><div class="v">{{ a.counts()["pass"] }}</div><div class="l">{{ a.counts()["no-resources"] }} not applicable &middot; {{ a.counts()["manual"] }} to review</div></div>
+    <div class="card"><div class="l">Coverage</div><div class="v">{{ a.coverage }}%</div><div class="l">of the baseline could be evaluated</div></div>
+  </div>
+
+  {% if retest %}
+  <h2>Retest after fixes</h2>
+  <p>Score <strong>{{ retest.before_score }} ({{ retest.before_grade }}) &rarr; {{ retest.after_score }} ({{ retest.after_grade }})</strong>.
+  Fixed: {{ retest.fixed|length }} &middot; still failing: {{ retest.still_failing|length }} &middot; new: {{ retest.new_failures|length }}.</p>
+  <ul>
+    {% for cid in retest.fixed %}<li><span class="pill s-pass">fixed</span> {{ cid }} {{ retest.titles[cid] }}</li>{% endfor %}
+    {% for cid in retest.still_failing %}<li><span class="pill s-fail">open</span> {{ cid }} {{ retest.titles[cid] }}</li>{% endfor %}
+    {% for cid in retest.new_failures %}<li><span class="pill s-manual">new</span> {{ cid }} {{ retest.titles[cid] }}</li>{% endfor %}
+  </ul>
+  {% endif %}
+
+  <h2>Summary</h2>
+  {% set top = a.top_risks(5) %}
+  <p>
+    The account was checked against {{ a.results|length }} baseline controls covering identity, logging, data, network and secrets,
+    using read-only access only. It scores <strong>{{ a.score }}/100 (grade {{ a.grade }})</strong>.
+    {% if top %}The most urgent finding: <strong>{{ top[0].failing[0].message.rstrip(".") }}</strong> ({{ top[0].control.id }}, {{ top[0].control.severity }}). {{ top[0].control.why }}{% else %}No baseline control failed.{% endif %}
+    Nothing was changed in the account. Every fix below is code or a command for you to review and apply; a retest scan confirms it.
+  </p>
+
+  <h2>Top risks</h2>
+  <table><thead><tr><th style="width:9%">Severity</th><th style="width:25%">Control</th><th style="width:33%">What we found</th><th>First step</th></tr></thead><tbody>
+  {% for r in top %}
+    <tr><td><span class="pill {{ r.control.severity }}">{{ r.control.severity }}</span></td>
+      <td><strong>{{ r.control.id }}</strong> {{ r.control.title }}</td>
+      <td>{% for f in r.failing[:2] %}{{ f.message }}{% if f.resource_name %} <span class="muted">({{ f.resource_name }})</span>{% endif %}<br>{% endfor %}{% if r.failing|length > 2 %}<span class="muted">+ {{ r.failing|length - 2 }} more</span>{% endif %}</td>
+      <td>{{ (r.control.fix.terraform or r.control.fix.cli or r.control.fix.console).split("\n")[0] }}</td></tr>
+  {% else %}
+    <tr><td colspan="4">No failing controls.</td></tr>
+  {% endfor %}
+  </tbody></table>
+
+  {% if dpdp %}
+  <h2>DPDP technical safeguards at a glance</h2>
+  <table><thead><tr><th>Safeguard area</th><th>Controls</th><th>Status</th></tr></thead><tbody>
+  {% for area, rs in a.by_dpdp_area().items() %}
+    {% set nf = rs|selectattr("status", "equalto", "fail")|list|length %}
+    <tr><td>{{ area }}</td><td>{% for r in rs %}<code>{{ r.control.id }}</code>{% if not loop.last %}, {% endif %}{% endfor %}</td>
+      <td>{% if nf %}<span class="pill s-fail">{{ nf }} failing</span>{% else %}<span class="pill s-pass">no failures</span>{% endif %}</td></tr>
+  {% endfor %}
+    <tr><td>Tested restore within the last 12 months</td><td>manual</td><td><span class="pill s-manual">ask for evidence</span> <span class="muted">(service S4 runs a timed restore drill)</span></td></tr>
+    <tr><td>A written 72-hour breach runbook</td><td>manual</td><td><span class="pill s-manual">template attached</span> <span class="muted">(docs/dpdp/breach-runbook-72h.md)</span></td></tr>
+  </tbody></table>
+  {% endif %}
+
+  <h2>All controls</h2>
+  {% for group, rs in a.by_group().items() %}
+    <h3>{{ group }}</h3>
+    {% for r in rs %}
+    <div class="ctl" id="{{ r.control.id }}">
+      <div class="head"><span class="pill s-{{ r.status }}">{{ labels[r.status] }}</span><strong>{{ r.control.id }} &middot; {{ r.control.title }}</strong><span class="pill {{ r.control.severity }}">{{ r.control.severity }}</span></div>
+      <p class="why">{{ r.control.why }}</p>
+      <div>{{ r.summary() }}</div>
+      {% if r.failing %}
+      <details{% if r.control.weight >= 6 %} open{% endif %}><summary>Evidence ({{ r.failing|length }})</summary>
+        <table><thead><tr><th>Resource</th><th>Region</th><th>Finding</th></tr></thead><tbody>
+        {% for f in r.failing[:25] %}<tr><td><code>{{ f.resource_uid or f.resource_name }}</code></td><td>{{ f.region }}</td><td>{{ f.message }}</td></tr>{% endfor %}
+        {% if r.failing|length > 25 %}<tr><td colspan="3" class="muted">+ {{ r.failing|length - 25 }} more in findings.csv</td></tr>{% endif %}
+        </tbody></table>
+      </details>
+      <details><summary>How to fix</summary>
+        {% if r.control.fix.terraform %}<div><strong>Terraform:</strong> <code>{{ r.control.fix.terraform }}</code></div>{% endif %}
+        {% if r.control.fix.cli %}<pre>{{ r.control.fix.cli }}</pre>{% endif %}
+        {% if r.control.fix.console %}<div><strong>Console:</strong> {{ r.control.fix.console }}</div>{% endif %}
+      </details>
+      {% endif %}
+      {% if r.manual %}<div class="muted">{% for m in r.manual %}{{ m.message }}<br>{% endfor %}</div>{% endif %}
+      {% if r.muted %}<div class="muted">Accepted risks (muted): {% for m in r.muted %}<code>{{ m.resource_name or m.resource_uid }}</code>{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+      <div class="muted" style="font-size:12.5px;margin-top:4px">
+        {% if r.control.prowler %}Prowler: {{ r.control.prowler|join(", ") }}{% endif %}{% if r.control.native %}Native check: {{ r.control.native }}{% endif %}
+        {% if r.cis %} &middot; {{ r.cis|join(", ") }}{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  {% endfor %}
+
+
+  {% if a.errors %}
+  <h2>Checks that could not run</h2>
+  <ul>{% for e in a.errors %}<li><strong>{{ e.check }}</strong> in {{ e.region }}: {{ e.error }}</li>{% endfor %}</ul>
+  {% endif %}
+
+  <h2>Method and limits</h2>
+  <ul>
+    <li>Read-only access: a cross-account role with the AWS-managed <code>SecurityAudit</code> and <code>ViewOnlyAccess</code> policies, a few extra
+      read permissions, and an explicit <strong>deny</strong> on reading data (S3 objects, database rows, secret values, log events). The account's own CloudTrail records every call.</li>
+    <li>Engine: {{ "Prowler " ~ a.engine_version if a.engine_version else a.engine }} (open source, Apache-2.0) running {{ nchecks }} curated checks, plus two native checks for spend alerts and CI/CD credentials. Each finding was reviewed by a person before delivery.</li>
+    <li>Score: each evaluated control counts by severity (critical 10, high 6, medium 3, low 1). Controls with no matching resources, or that could not be evaluated, are left out of the score and shown as coverage instead.</li>
+    <li>Findings reflect the configuration at the time of the scan. A baseline check is not a penetration test and not a guarantee that the account cannot be breached.</li>
+    {% if dpdp %}<li>This is a technical readiness review, not legal advice and not a certification of compliance with the DPDP Act or Rules.</li>{% endif %}
+    {% for n in a.notes %}<li>{{ n }}</li>{% endfor %}
+  </ul>
+
+  <footer>Generated by AWS Bill Doctor {{ version }} (security baseline) &middot; github.com/ObaidAbdullah16/aws-bill-doctor</footer>
+</main>
+<script>
+  addEventListener("beforeprint", () => document.querySelectorAll("details").forEach(d => { d.dataset.wasOpen = d.open; d.open = true; }));
+  addEventListener("afterprint", () => document.querySelectorAll("details").forEach(d => { d.open = d.dataset.wasOpen === "true"; }));
+</script>
+</body>
+</html>

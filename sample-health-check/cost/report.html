@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS cost &amp; waste audit - Acme Retail (synthetic demo)</title>
+<style>
+:root{--bg:#f5f6f8;--fg:#18202e;--card:#fff;--line:#dfe3e8;--muted:#5b6475;--accent:#0b6bcb;--high:#c62828;--medium:#b26a00;--low:#2e7d32;--info:#607080}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1116;--fg:#e8edf3;--card:#161b22;--line:#2d333b;--muted:#94a0b0;--accent:#58a6ff;--high:#f47067;--medium:#d29922;--low:#57ab5a;--info:#8b949e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1060px;margin:0 auto;padding:28px 16px 48px}
+h1{font-size:26px;margin:0}h2{font-size:19px;margin:32px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}h3{font-size:16px;margin:20px 0 4px}
+.muted{color:var(--muted)}
+.banner{background:#fff4ce;color:#5c4400;border:1px solid #e3c35a;border-radius:8px;padding:10px 14px;margin:14px 0;font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card .v{font-size:28px;font-weight:700}.card .l{color:var(--muted);font-size:13px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);background:transparent}
+td.num,th.num{text-align:right;white-space:nowrap}
+code{font-size:12.5px;word-break:break-all}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid currentColor}
+.high{color:var(--high)}.medium{color:var(--medium)}.low{color:var(--low)}.info{color:var(--info)}
+details{margin-top:4px}summary{cursor:pointer;color:var(--accent);font-size:13px}
+pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;font-size:12px}
+.why{color:var(--muted);margin:0 0 8px}
+footer{margin-top:40px;color:var(--muted);font-size:13px}
+@media print{body{background:#fff;color:#000}.card,table{border-color:#bbb}details>summary{list-style:none;color:#000;font-weight:600}details::details-content{content-visibility:visible;display:block}a{color:#000}}
+@media (max-width:640px){td:nth-child(4),th:nth-child(4){display:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1>AWS cost &amp; waste audit</h1>
+  <div class="muted">Account Acme Retail (synthetic demo) &middot; regions ap-south-1, us-east-1 &middot; 02 Nov 2026, 11:39 UTC</div>
+  <div class="banner">SYNTHETIC DEMO DATA &mdash; generated against a simulated AWS account (moto). It shows what a real report looks like; no customer data.</div>
+
+  <div class="cards">
+    <div class="card"><div class="l">Estimated savings / month</div><div class="v">$616.37</div></div>
+    <div class="card"><div class="l">Estimated savings / year</div><div class="v">$7,396.44</div></div>
+    <div class="card"><div class="l">Findings</div><div class="v">20</div>
+      <div class="l"><span class="high">4 high</span> &middot; <span class="medium">7 medium</span> &middot; <span class="low">5 low</span> &middot; <span class="info">4 info</span></div></div>
+    <div class="card"><div class="l">Low-risk quick wins</div><div class="v">1</div><div class="l">$2.28 / month</div></div>
+  </div>
+
+  <h2>Summary</h2>
+  <p>
+    The scan ran 12 read-only checks and found 20 items worth reviewing.
+The largest single opportunity is <strong>Unattached EBS volume</strong> (<code>vol-61b83803386704d04</code>,
+    about $208.10/month). 1 fix is low-risk and can be done this week.    Nothing was changed in the account: every fix below is a command for you to review and run.
+  </p>
+
+
+  <h2>Top opportunities</h2>
+  <table><thead><tr><th>Priority</th><th>What</th><th>Resource</th><th>Region</th><th class="num">Saving / month</th></tr></thead><tbody>
+    <tr><td><span class="pill high">high</span></td><td>Unattached EBS volume<br><span class="muted">100 GiB io1, 3,000 provisioned IOPS (perf-test), not attached to any instance</span></td>
+      <td><code>vol-61b83803386704d04</code></td><td>ap-south-1</td><td class="num">$208.10</td></tr>
+    <tr><td><span class="pill high">high</span></td><td>Unattached EBS volume<br><span class="muted">1000 GiB gp2 (forgotten-ml-dataset), not attached to any instance</span></td>
+      <td><code>vol-d5ad5396436612ce5</code></td><td>us-east-1</td><td class="num">$100.00</td></tr>
+    <tr><td><span class="pill high">high</span></td><td>Instance looks idle<br><span class="muted">t2.large (legacy-reporting): average CPU 2.7%, peak 7.5% over 13 days</span></td>
+      <td><code>i-1222cd8a252d8edc1</code></td><td>ap-south-1</td><td class="num">$72.42</td></tr>
+    <tr><td><span class="pill high">high</span></td><td>Database has had no connections<br><span class="muted">db.t3.medium postgres 100 GiB: 0 connections in 13 days</span></td>
+      <td><code>analytics-copy</code></td><td>ap-south-1</td><td class="num">$63.96</td></tr>
+    <tr><td><span class="pill medium">medium</span></td><td>Unattached EBS volume<br><span class="muted">500 GiB gp3 (migration-temp), not attached to any instance</span></td>
+      <td><code>vol-8f632793cccc4eedc</code></td><td>ap-south-1</td><td class="num">$45.60</td></tr>
+    <tr><td><span class="pill medium">medium</span></td><td>NAT gateway barely used<br><span class="muted">moved 0.51 GB (in + out) in 14 days (VPC vpc-0527c2ef9d79f9cd3)</span></td>
+      <td><code>nat-95a718f3d35a4e2d8</code></td><td>ap-south-1</td><td class="num">$40.88</td></tr>
+    <tr><td><span class="pill medium">medium</span></td><td>Unattached EBS volume<br><span class="muted">200 GiB gp2 (old-jenkins-data), not attached to any instance</span></td>
+      <td><code>vol-021fe5f4debe2e734</code></td><td>ap-south-1</td><td class="num">$22.80</td></tr>
+    <tr><td><span class="pill medium">medium</span></td><td>Load balancer has no targets<br><span class="muted">application load balancer with 1 target group(s) and 0 registered targets</span></td>
+      <td><code>old-promo-alb</code></td><td>ap-south-1</td><td class="num">$16.43</td></tr>
+    <tr><td><span class="pill medium">medium</span></td><td>Instance stopped for a long time<br><span class="muted">t3.large (old-build-agent) stopped for 75 days, 1 volume(s) attached</span></td>
+      <td><code>i-8891acb15ab0eabd4</code></td><td>ap-south-1</td><td class="num">$13.68</td></tr>
+    <tr><td><span class="pill medium">medium</span></td><td>Old snapshot not used by any AMI<br><span class="muted">410 days old, from a 200 GiB volume. pre-migration backup 2025</span></td>
+      <td><code>snap-623da09cda0b9887a</code></td><td>ap-south-1</td><td class="num">$10.00</td></tr>
+  </tbody></table>
+
+  <h2>Findings by check</h2>
+    <h3>EBS-001 &middot; Unattached EBS volumes <span class="muted">(4)</span></h3>
+    <p class="why">Volumes in the &#39;available&#39; state are billed every month but serve nothing - often left behind by deleted instances.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>vol-61b83803386704d04</code></td><td>100 GiB io1, 3,000 provisioned IOPS (perf-test), not attached to any instance</td>
+        <td>Confirm with the owner, snapshot it (cheap insurance), then delete the volume. The command waits for the snapshot to finish (up to 10 minutes); if the wait times out, delete the volume once the snapshot shows &#39;completed&#39;. Delete the snapshot too after a month or two if nobody needs it.<details><summary>Command (risk: medium)</summary><pre>SNAP=$(aws ec2 create-snapshot --region ap-south-1 --volume-id vol-61b83803386704d04 --description &#39;billdoctor: backup before delete&#39; --query SnapshotId --output text) &amp;&amp; aws ec2 wait snapshot-completed --region ap-south-1 --snapshot-ids &#34;$SNAP&#34; &amp;&amp; aws ec2 delete-volume --region ap-south-1 --volume-id vol-61b83803386704d04</pre></details></td>
+        <td>ap-south-1</td><td class="num">$208.10</td><td class="num">$208.10</td></tr>
+      <tr><td><code>vol-d5ad5396436612ce5</code></td><td>1000 GiB gp2 (forgotten-ml-dataset), not attached to any instance</td>
+        <td>Confirm with the owner, snapshot it (cheap insurance), then delete the volume. The command waits for the snapshot to finish (up to 10 minutes); if the wait times out, delete the volume once the snapshot shows &#39;completed&#39;. Delete the snapshot too after a month or two if nobody needs it.<details><summary>Command (risk: medium)</summary><pre>SNAP=$(aws ec2 create-snapshot --region us-east-1 --volume-id vol-d5ad5396436612ce5 --description &#39;billdoctor: backup before delete&#39; --query SnapshotId --output text) &amp;&amp; aws ec2 wait snapshot-completed --region us-east-1 --snapshot-ids &#34;$SNAP&#34; &amp;&amp; aws ec2 delete-volume --region us-east-1 --volume-id vol-d5ad5396436612ce5</pre></details></td>
+        <td>us-east-1</td><td class="num">$100.00</td><td class="num">$100.00</td></tr>
+      <tr><td><code>vol-8f632793cccc4eedc</code></td><td>500 GiB gp3 (migration-temp), not attached to any instance</td>
+        <td>Confirm with the owner, snapshot it (cheap insurance), then delete the volume. The command waits for the snapshot to finish (up to 10 minutes); if the wait times out, delete the volume once the snapshot shows &#39;completed&#39;. Delete the snapshot too after a month or two if nobody needs it.<details><summary>Command (risk: medium)</summary><pre>SNAP=$(aws ec2 create-snapshot --region ap-south-1 --volume-id vol-8f632793cccc4eedc --description &#39;billdoctor: backup before delete&#39; --query SnapshotId --output text) &amp;&amp; aws ec2 wait snapshot-completed --region ap-south-1 --snapshot-ids &#34;$SNAP&#34; &amp;&amp; aws ec2 delete-volume --region ap-south-1 --volume-id vol-8f632793cccc4eedc</pre></details></td>
+        <td>ap-south-1</td><td class="num">$45.60</td><td class="num">$45.60</td></tr>
+      <tr><td><code>vol-021fe5f4debe2e734</code></td><td>200 GiB gp2 (old-jenkins-data), not attached to any instance</td>
+        <td>Confirm with the owner, snapshot it (cheap insurance), then delete the volume. The command waits for the snapshot to finish (up to 10 minutes); if the wait times out, delete the volume once the snapshot shows &#39;completed&#39;. Delete the snapshot too after a month or two if nobody needs it.<details><summary>Command (risk: medium)</summary><pre>SNAP=$(aws ec2 create-snapshot --region ap-south-1 --volume-id vol-021fe5f4debe2e734 --description &#39;billdoctor: backup before delete&#39; --query SnapshotId --output text) &amp;&amp; aws ec2 wait snapshot-completed --region ap-south-1 --snapshot-ids &#34;$SNAP&#34; &amp;&amp; aws ec2 delete-volume --region ap-south-1 --volume-id vol-021fe5f4debe2e734</pre></details></td>
+        <td>ap-south-1</td><td class="num">$22.80</td><td class="num">$22.80</td></tr>
+    </tbody></table>
+    <h3>EBS-002 &middot; gp2 volumes that should be gp3 <span class="muted">(1)</span></h3>
+    <p class="why">gp3 is about 20% cheaper than gp2 per GiB and has a 3,000 IOPS baseline regardless of size. The change is online.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>vol-7128ec531f6695580</code></td><td>100 GiB gp2 attached to i-1222cd8a252d8edc1</td>
+        <td>Modify the volume to gp3 (no downtime).<details><summary>Command (risk: low)</summary><pre>aws ec2 modify-volume --region ap-south-1 --volume-id vol-7128ec531f6695580 --volume-type gp3</pre></details></td>
+        <td>ap-south-1</td><td class="num">$11.40</td><td class="num">$2.28</td></tr>
+    </tbody></table>
+    <h3>EBS-003 &middot; Old EBS snapshots <span class="muted">(2)</span></h3>
+    <p class="why">Snapshots older than the retention you need, and not used by an AMI, keep costing storage forever.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>snap-623da09cda0b9887a</code></td><td>410 days old, from a 200 GiB volume. pre-migration backup 2025</td>
+        <td>Keep only what your retention policy needs (e.g. 30-90 days) - set up Amazon Data Lifecycle Manager instead of manual snapshots. Saving shown is an upper bound (snapshots are incremental).<details><summary>Command (risk: medium)</summary><pre>aws ec2 delete-snapshot --region ap-south-1 --snapshot-id snap-623da09cda0b9887a</pre></details></td>
+        <td>ap-south-1</td><td class="num">$10.00</td><td class="num">$10.00</td></tr>
+      <tr><td><code>snap-d93c9fe1018b66a97</code></td><td>220 days old, from a 200 GiB volume. manual backup before upgrade</td>
+        <td>Keep only what your retention policy needs (e.g. 30-90 days) - set up Amazon Data Lifecycle Manager instead of manual snapshots. Saving shown is an upper bound (snapshots are incremental).<details><summary>Command (risk: medium)</summary><pre>aws ec2 delete-snapshot --region ap-south-1 --snapshot-id snap-d93c9fe1018b66a97</pre></details></td>
+        <td>ap-south-1</td><td class="num">$10.00</td><td class="num">$10.00</td></tr>
+    </tbody></table>
+    <h3>EC2-001 &middot; Unassociated Elastic IPs <span class="muted">(2)</span></h3>
+    <p class="why">Since February 2024 every public IPv4 address costs $0.005/hour; an Elastic IP attached to nothing is pure waste.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>eipalloc-0076a7c9852db02a4</code></td><td>127.184.176.136 is not attached to anything</td>
+        <td>Release it unless an allow-list somewhere depends on this exact IP.<details><summary>Command (risk: medium)</summary><pre>aws ec2 release-address --region ap-south-1 --allocation-id eipalloc-0076a7c9852db02a4</pre></details></td>
+        <td>ap-south-1</td><td class="num">$3.65</td><td class="num">$3.65</td></tr>
+      <tr><td><code>eipalloc-689a9541a3f86cde3</code></td><td>127.43.70.107 is not attached to anything</td>
+        <td>Release it unless an allow-list somewhere depends on this exact IP.<details><summary>Command (risk: medium)</summary><pre>aws ec2 release-address --region us-east-1 --allocation-id eipalloc-689a9541a3f86cde3</pre></details></td>
+        <td>us-east-1</td><td class="num">$3.65</td><td class="num">$3.65</td></tr>
+    </tbody></table>
+    <h3>EC2-002 &middot; Long-stopped instances still paying for disks <span class="muted">(1)</span></h3>
+    <p class="why">A stopped instance costs nothing for compute, but its EBS volumes are billed in full.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>i-8891acb15ab0eabd4</code></td><td>t3.large (old-build-agent) stopped for 75 days, 1 volume(s) attached</td>
+        <td>If it is not coming back: create an AMI (keeps a restorable copy), then terminate the instance. Volumes with &#39;delete on termination&#39; turned off survive the termination; delete them too (the AMI holds a copy) or they show up as unattached volumes next time.<details><summary>Command (risk: high)</summary><pre>IMG=$(aws ec2 create-image --region ap-south-1 --instance-id i-8891acb15ab0eabd4 --name billdoctor-i-8891acb15ab0eabd4 --query ImageId --output text) &amp;&amp; aws ec2 wait image-available --region ap-south-1 --image-ids &#34;$IMG&#34; &amp;&amp; aws ec2 terminate-instances --region ap-south-1 --instance-ids i-8891acb15ab0eabd4</pre></details></td>
+        <td>ap-south-1</td><td class="num">$13.68</td><td class="num">$13.68</td></tr>
+    </tbody></table>
+    <h3>EC2-003 &middot; Idle running instances <span class="muted">(1)</span></h3>
+    <p class="why">Instances averaging under 5% CPU (and never above 20%) for two weeks are usually forgotten or oversized.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>i-1222cd8a252d8edc1</code></td><td>t2.large (legacy-reporting): average CPU 2.7%, peak 7.5% over 13 days</td>
+        <td>Confirm with the owner. Then stop it, schedule it (office hours only), or downsize. Saving shown assumes it can be stopped.<details><summary>Command (risk: high)</summary><pre>aws ec2 stop-instances --region ap-south-1 --instance-ids i-1222cd8a252d8edc1</pre></details></td>
+        <td>ap-south-1</td><td class="num">$72.42</td><td class="num">$72.42</td></tr>
+    </tbody></table>
+    <h3>EC2-004 &middot; Previous-generation instance types <span class="muted">(2)</span></h3>
+    <p class="why">Older families (t2, m4, c4, r4...) cost more for less performance than their current replacements.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>i-1222cd8a252d8edc1</code></td><td>t2.large -&gt; t3.large</td>
+        <td>Change the instance type to t3.large during a maintenance window (stop, change type, start). Newer types run on Nitro: very old AMIs need the ENA and NVMe drivers (current images have them). A stop/start changes the public IP unless it is an Elastic IP. Graviton (t4g/m7g) is cheaper still if the software runs on ARM.<details><summary>Command (risk: medium)</summary><pre>aws ec2 stop-instances --region ap-south-1 --instance-ids i-1222cd8a252d8edc1 &amp;&amp; aws ec2 wait instance-stopped --region ap-south-1 --instance-ids i-1222cd8a252d8edc1 &amp;&amp; aws ec2 modify-instance-attribute --region ap-south-1 --instance-id i-1222cd8a252d8edc1 --instance-type Value=t3.large &amp;&amp; aws ec2 start-instances --region ap-south-1 --instance-ids i-1222cd8a252d8edc1</pre></details></td>
+        <td>ap-south-1</td><td class="num">$72.42</td><td class="num">$7.01</td></tr>
+      <tr><td><code>i-a6d48966bc3c7556b</code></td><td>m4.large -&gt; m6i.large</td>
+        <td>Change the instance type to m6i.large during a maintenance window (stop, change type, start). Newer types run on Nitro: very old AMIs need the ENA and NVMe drivers (current images have them). A stop/start changes the public IP unless it is an Elastic IP. Graviton (t4g/m7g) is cheaper still if the software runs on ARM.<details><summary>Command (risk: medium)</summary><pre>aws ec2 stop-instances --region ap-south-1 --instance-ids i-a6d48966bc3c7556b &amp;&amp; aws ec2 wait instance-stopped --region ap-south-1 --instance-ids i-a6d48966bc3c7556b &amp;&amp; aws ec2 modify-instance-attribute --region ap-south-1 --instance-id i-a6d48966bc3c7556b --instance-type Value=m6i.large &amp;&amp; aws ec2 start-instances --region ap-south-1 --instance-ids i-a6d48966bc3c7556b</pre></details></td>
+        <td>ap-south-1</td><td class="num">$73.00</td><td class="num">$2.92</td></tr>
+    </tbody></table>
+    <h3>ELB-001 &middot; Load balancers with no targets <span class="muted">(1)</span></h3>
+    <p class="why">A load balancer is billed by the hour even when nothing is registered behind it.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>old-promo-alb</code></td><td>application load balancer with 1 target group(s) and 0 registered targets</td>
+        <td>Delete it if the service is gone. First check DNS records pointing at it, and its listener rules: a load balancer without targets can still serve redirects or fixed responses.<details><summary>Command (risk: medium)</summary><pre>aws elbv2 delete-load-balancer --region ap-south-1 --load-balancer-arn arn:aws:elasticloadbalancing:ap-south-1:123456789012:loadbalancer/app/old-promo-alb/3eacd4314c9ad45d</pre></details></td>
+        <td>ap-south-1</td><td class="num">$16.43</td><td class="num">$16.43</td></tr>
+    </tbody></table>
+    <h3>LOGS-001 &middot; Log groups that never expire <span class="muted">(2)</span></h3>
+    <p class="why">The default retention is &#39;never expire&#39;, so log storage grows forever.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>/aws/lambda/old-report-fn</code></td><td>12.00 GB stored, retention: never expire</td>
+        <td>Set a retention period that matches your needs (e.g. 30 days for app logs, longer for audit logs). Saving depends on how old the data is, so it is not estimated.<details><summary>Command (risk: low)</summary><pre>aws logs put-retention-policy --region ap-south-1 --log-group-name &#39;/aws/lambda/old-report-fn&#39; --retention-in-days 30</pre></details></td>
+        <td>ap-south-1</td><td class="num">$0.36</td><td class="num">-</td></tr>
+      <tr><td><code>/ecs/web</code></td><td>48.00 GB stored, retention: never expire</td>
+        <td>Set a retention period that matches your needs (e.g. 30 days for app logs, longer for audit logs). Saving depends on how old the data is, so it is not estimated.<details><summary>Command (risk: low)</summary><pre>aws logs put-retention-policy --region ap-south-1 --log-group-name &#39;/ecs/web&#39; --retention-in-days 30</pre></details></td>
+        <td>ap-south-1</td><td class="num">$1.44</td><td class="num">-</td></tr>
+    </tbody></table>
+    <h3>NAT-001 &middot; Idle NAT gateways <span class="muted">(1)</span></h3>
+    <p class="why">A NAT gateway costs ~$33-41/month before any data. Many dev VPCs keep one for traffic that never comes.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>nat-95a718f3d35a4e2d8</code></td><td>moved 0.51 GB (in + out) in 14 days (VPC vpc-0527c2ef9d79f9cd3)</td>
+        <td>Delete it if private subnets do not need the internet; use VPC endpoints for S3/DynamoDB/ECR, or public subnets with tight security groups for small dev setups.<details><summary>Command (risk: high)</summary><pre>aws ec2 delete-nat-gateway --region ap-south-1 --nat-gateway-id nat-95a718f3d35a4e2d8</pre></details></td>
+        <td>ap-south-1</td><td class="num">$40.88</td><td class="num">$40.88</td></tr>
+    </tbody></table>
+    <h3>RDS-001 &middot; Idle RDS databases <span class="muted">(1)</span></h3>
+    <p class="why">A database with zero connections for two weeks is usually a forgotten test or migration copy.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>analytics-copy</code></td><td>db.t3.medium postgres 100 GiB: 0 connections in 13 days</td>
+        <td>Take a final snapshot and delete it (stopping only lasts 7 days before AWS restarts it).<details><summary>Command (risk: high)</summary><pre>aws rds delete-db-instance --region ap-south-1 --db-instance-identifier analytics-copy --final-db-snapshot-identifier analytics-copy-billdoctor-final</pre></details></td>
+        <td>ap-south-1</td><td class="num">$63.96</td><td class="num">$63.96</td></tr>
+    </tbody></table>
+    <h3>S3-001 &middot; S3 buckets without lifecycle rules <span class="muted">(2)</span></h3>
+    <p class="why">Without lifecycle rules, incomplete multipart uploads and old object versions are kept (and billed) forever.</p>
+    <table><thead><tr><th>Resource</th><th>Detail</th><th>Recommendation</th><th>Region</th><th class="num">Now / month</th><th class="num">Saving</th></tr></thead><tbody>
+      <tr><td><code>acme-uploads-demo</code></td><td>incomplete multipart uploads are never cleaned up; versioning is on but old versions never expire</td>
+        <td>Add a lifecycle rule: abort incomplete multipart uploads after 7 days and expire noncurrent versions after 30-90 days.<details><summary>Command (risk: low)</summary><pre>aws s3api put-bucket-lifecycle-configuration --region ap-south-1 --bucket acme-uploads-demo --lifecycle-configuration &#39;{&#34;Rules&#34;:[{&#34;ID&#34;:&#34;billdoctor-hygiene&#34;,&#34;Status&#34;:&#34;Enabled&#34;,&#34;Filter&#34;:{},&#34;AbortIncompleteMultipartUpload&#34;:{&#34;DaysAfterInitiation&#34;:7},&#34;NoncurrentVersionExpiration&#34;:{&#34;NoncurrentDays&#34;:60}}]}&#39;  # WARNING: replaces existing rules - merge them first</pre></details></td>
+        <td>ap-south-1</td><td class="num">-</td><td class="num">-</td></tr>
+      <tr><td><code>acme-exports-demo</code></td><td>incomplete multipart uploads are never cleaned up</td>
+        <td>Add a lifecycle rule: abort incomplete multipart uploads after 7 days.<details><summary>Command (risk: low)</summary><pre>aws s3api put-bucket-lifecycle-configuration --region ap-south-1 --bucket acme-exports-demo --lifecycle-configuration &#39;{&#34;Rules&#34;:[{&#34;ID&#34;:&#34;billdoctor-hygiene&#34;,&#34;Status&#34;:&#34;Enabled&#34;,&#34;Filter&#34;:{},&#34;AbortIncompleteMultipartUpload&#34;:{&#34;DaysAfterInitiation&#34;:7}}]}&#39;  # WARNING: replaces existing rules - merge them first</pre></details></td>
+        <td>ap-south-1</td><td class="num">-</td><td class="num">-</td></tr>
+    </tbody></table>
+
+
+  <h2>Method and assumptions</h2>
+  <ul>
+    <li>Only read-only API calls were made (describe/list/get and CloudWatch metrics over the last 14 days).</li>
+    <li>Prices are approximate on-demand list prices (2026-10); discounts, Savings Plans and Reserved Instances are not applied.</li>
+    <li>Savings are estimates. Confirm with the resource owner, and snapshot or back up before deleting anything.</li>
+<li>ap-south-1: no local price for ebs_iops_month/io1; used us-east-1 as an approximation</li><li>ap-south-1: no local price for ebs_iops_month/gp3; used us-east-1 as an approximation</li><li>ap-south-1: no local price for ec2_hour/m4.large; used us-east-1 as an approximation</li><li>ap-south-1: no local price for ec2_hour/m6i.large; used us-east-1 as an approximation</li><li>ap-south-1: no local price for alb_hour; used us-east-1 as an approximation</li><li>ap-south-1: no local price for logs_gb_month; used us-east-1 as an approximation</li><li>ap-south-1: no local price for rds_hour/db.t3.medium; used us-east-1 as an approximation</li>  </ul>
+
+  <footer>Generated by AWS Bill Doctor 1.1.0 &middot; github.com/ObaidAbdullah16/aws-bill-doctor</footer>
+</main>
+<script>
+  // Print every fix command: closed <details> would hide them in the PDF (for browsers without ::details-content).
+  addEventListener("beforeprint", () => document.querySelectorAll("details").forEach(d => { d.dataset.wasOpen = d.open; d.open = true; }));
+  addEventListener("afterprint", () => document.querySelectorAll("details").forEach(d => { d.open = d.dataset.wasOpen === "true"; }));
+</script>
+</body>
+</html>
