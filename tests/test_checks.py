@@ -67,7 +67,7 @@ def test_old_snapshots_respect_age_and_ami(aws, ctx, now):
     old = c.create_snapshot(VolumeId=v)["SnapshotId"]
     new = c.create_snapshot(VolumeId=v)["SnapshotId"]
     be.snapshots[old].start_time = now - dt.timedelta(days=200)
-    image = c.register_image(Name="x", RootDeviceName="/dev/xvda")["ImageId"]
+    image = c.register_image(Name="test-ami", RootDeviceName="/dev/xvda")["ImageId"]
     ami_snap = c.describe_images(ImageIds=[image])["Images"][0]["BlockDeviceMappings"][0]["Ebs"]["SnapshotId"]
     be.snapshots[ami_snap].start_time = now - dt.timedelta(days=300)
     out = ids(ebs.old_snapshots(ctx))
